@@ -40,7 +40,7 @@ function render(state:StateObject) {
   if (state.loading) {
     loadingTxt.style.display = '';
   } else {
-    loadingTxt.style.display = 'none;';
+    loadingTxt.style.display = 'none';
   }
 
   // render list of worker

@@ -14,7 +14,7 @@ import {SummaryObject} from './reducer';
 enum ActionType {
   ERROR = 'error',
   LOADING = 'loading',
-  SUMMARY = 'summary',
+  SUMMARY = 'summaryLoaded',
 }
 
 export const errorAction = createAction<string>('error');
