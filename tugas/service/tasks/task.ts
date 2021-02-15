@@ -1,21 +1,21 @@
 import { getConnection } from 'typeorm';
 import * as workerClient  from './worker.client';
-import { bus } from '../lib/bus';
-import { TaskItems, Task } from './task.model';
-
+import * as bus  from '../lib/bus';
+import { Task } from './task.model';
+import {DataWorker} from './task.service'
 export const ERROR_TASK_DATA_INVALID = 'data pekerjaan baru tidak lengkap';
 export const ERROR_TASK_NOT_FOUND = 'pekerjaan tidak ditemukan';
 export const ERROR_TASK_ALREADY_DONE = 'pekerjaan sudah selesai';
 
-export async function add(data : TaskItems ): Promise<TaskItems> {
-  if (!data.job || !data.assignee) {
+export async function add(data : DataWorker ): Promise<any> {
+  if (!data.job || !data.assigneeId) {
     throw ERROR_TASK_DATA_INVALID;
   }
-  await workerClient.info(data.assignee.id);
-  const taskRepo = getConnection().getRepository('Task');
+  await workerClient.info(data.assigneeId);
+  const taskRepo = getConnection().getRepository <Task> ('Task');
   const newTask = await taskRepo.save({
     job: data.job,
-    assignee: { id: data.assignee },
+    assignee: { id: data.assigneeId },
     attachment: data.attachment,
   });
   const task = await taskRepo.findOne(newTask.id, { relations: ['assignee'] });
@@ -26,9 +26,9 @@ export async function add(data : TaskItems ): Promise<TaskItems> {
   return task;
 }
 
-export async function done <TaskItems> (id) : Promise<TaskItems>{
-  const taskRepo = getConnection().getRepository('Task');
-  const task = await taskRepo.findOne(id, { relations: ['assignee'] });
+export async function done (id: string){
+  const taskRepo = getConnection().getRepository<Task>('Task');
+  const task = await taskRepo.findOne(id, { relations: ['assignee'] }) ;
   if (!task || task?.cancelled) {
     throw ERROR_TASK_NOT_FOUND;
   }
@@ -41,8 +41,8 @@ export async function done <TaskItems> (id) : Promise<TaskItems>{
   return task;
 }
 
-export async function cancel(id) {
-  const taskRepo = getConnection().getRepository('Task');
+export async function cancel(id :string) : Promise<any> {
+  const taskRepo = getConnection().getRepository<Task>('Task');
   const task = await taskRepo.findOne(id, { relations: ['assignee'] });
   if (!task || task?.cancelled) {
     throw ERROR_TASK_NOT_FOUND;
@@ -53,7 +53,7 @@ export async function cancel(id) {
   return task;
 }
 
-export function list() {
-  const taskRepo = getConnection().getRepository('Task');
+export function list() : Promise<any> {
+  const taskRepo = getConnection().getRepository<Task>('Task');
   return taskRepo.find({ relations: ['assignee'] });
 }

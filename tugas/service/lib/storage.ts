@@ -80,7 +80,7 @@ export function saveFile(file : string , mimetype : string ) {
  * @throws {string} when objectName is null
  * @throws {string} when filename not found
  */
-export async function readFile(objectName) {
+export async function readFile(objectName : string) {
   if (!objectName) {
     throw ERROR_REQUIRE_OBJECT_NAME;
   }

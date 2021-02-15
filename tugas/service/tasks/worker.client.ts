@@ -3,7 +3,7 @@ export const WORKER_HOST = 'http://localhost:7001';
 export const ERROR_WORKER_NOT_FOUND = 'pekerja tidak ditemukan';
 
 
-export default function info (id : number){
+export function info (id : number){
   return new Promise((resolve, reject) => {
     const req = http.request(`${WORKER_HOST}/info?id=${id}`, (res) => {
       let data = '';
@@ -14,7 +14,7 @@ export default function info (id : number){
         data += chunk.toString();
       });
       res.on('end', () => {
-        const worker = JSON.stringify(data);
+        const worker = JSON.stringify (data);
         resolve(worker);
       });
       res.on('error', (err) => {

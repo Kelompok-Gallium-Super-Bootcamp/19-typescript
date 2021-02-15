@@ -2,11 +2,11 @@ import { createServer } from 'http';
 import * as url from 'url';
 import { stdout } from 'process';
 import {
-  add as addSvc,
-  cancel as cancelSvc,
-  done as doneSvc,
-  list as listSvc,
-  info as getAttachmentSvc,
+  addSvc,
+  cancelSvc,
+  doneSvc,
+  listSvc,
+  getAttachmentSvc,
 } from './task.service';
 
 export let server;
@@ -19,7 +19,7 @@ function run(callback) {
       return;
     }
 
-    function respond(statusCode, message) {
+    function respond(statusCode : number, message?: string) {
       res.statusCode = statusCode || 200;
       res.write(message || '');
       res.end();

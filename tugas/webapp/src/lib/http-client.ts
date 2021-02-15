@@ -1,5 +1,15 @@
 /** @module http-client */
 
+import { WorkerData, TaskData} from '../../typing'
+
+export interface RequestOption {
+  method: 'GET' | 'POST' | 'PUT' | 'OPTION' | 'DELETE';
+  body?: any;
+  customConf?: any;
+  json?: any;
+}
+
+
 /**
  * basic client untuk request ke server
  * @param {string} endpoint target / url endpoint
@@ -7,28 +17,28 @@
  * @param {RequestInit} options tambahan opsi request
  * @return {Promise<any>} hasil request
  */
-async function client(endpoint, json, { method, body, ...customConf } = {}) {
+export async function client(endpoint : string, options : RequestOption) {
   let headers;
-  if (json) {
+  if (options?.json) {
     headers = { 'Content-Type': 'application/json' };
   }
 
   const config = {
-    method,
-    ...customConf,
+    method : options?.method || 'GET',
+    ...options?.customConf,
     headers: {
       ...headers,
-      ...customConf.headers,
+      ...options.customConf?.headers,
     },
   };
 
-  if (body) {
-    if (json) {
-      config.body = JSON.stringify(body);
+  if (options?.body) {
+    if (options?.json) {
+      config.body = JSON.stringify(options?.body);
     } else {
       const formData = new FormData();
-      for (const name in body) {
-        formData.append(name, body[name]);
+      for (const name in options?.body) {
+        formData.append(name, options?.body[name]);
       }
       config.body = formData;
     }
@@ -53,8 +63,12 @@ async function client(endpoint, json, { method, body, ...customConf } = {}) {
  * @param {string} endpoint target / url endpoint
  * @param {RequestInit} option tambahan opsi request
  */
-client.get = (endpoint, customConf = {}) => {
-  return client(endpoint, true, { method: 'GET', ...customConf });
+client.get = (endpoint:string, customConf : any= {}) => {
+  const config: RequestOption = {
+    method: 'GET',
+    ...customConf
+  };
+  return client(endpoint, config);
 };
 
 /**
@@ -64,8 +78,13 @@ client.get = (endpoint, customConf = {}) => {
  * @param {Object} json isi request
  * @param {RequestInit} option tambahan opsi request
  */
-client.post = (endpoint, body, json, customConf = {}) => {
-  return client(endpoint, json, { method: 'POST', body, ...customConf });
+client.post = (endpoint : string, body : TaskData, customConf: any= {}) => {
+  const config :RequestOption = {
+    method: 'POST',
+    body : body, 
+    ...customConf 
+  }
+  return client(endpoint, config );
 };
 
 /**
@@ -75,8 +94,14 @@ client.post = (endpoint, body, json, customConf = {}) => {
  * @param {Object} json isi request
  * @param {RequestInit} option tambahan opsi request
  */
-client.put = (endpoint, body, json, customConf = {}) => {
-  return client(endpoint, json, { method: 'PUT', body, ...customConf });
+client.put = (endpoint :string , body : TaskData, json : JSON, customConf = {}) => {
+  const config : RequestOption = {
+    json,
+    method: 'PUT', 
+    body : body,
+    ...customConf 
+  }
+  return client(endpoint, config);
 };
 
 /**
@@ -86,8 +111,13 @@ client.put = (endpoint, body, json, customConf = {}) => {
  * @param {Object} json isi request
  * @param {RequestInit} option tambahan opsi request
  */
-client.del = (endpoint, body, json, customConf = {}) => {
-  return client(endpoint, json, { method: 'DELETE', body, ...customConf });
+client.del = (endpoint: string, body : TaskData, json :JSON , customConf = {}) => {
+  const config :RequestOption = {
+    json, 
+    method: 'DELETE',
+    body : body,
+    ...customConf 
+  }
+  return client(endpoint, config);
 };
 
-module.exports = { client };

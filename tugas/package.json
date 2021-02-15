@@ -7,6 +7,7 @@
     "test": "nyc mocha",
     "svc:start": "node .",
     "svc:dev": "nodemon .",
+    "service": "ts-node --project service/tsconfig.json service/server.ts",
     "lint": "eslint .",
     "web:build": "webpack --mode production",
     "web:dev": "webpack serve --open --mode development"

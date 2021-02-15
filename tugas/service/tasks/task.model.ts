@@ -2,10 +2,19 @@
 
 import { EntitySchema } from 'typeorm';
 
+export interface Worker {
+  assigneed : number ;
+  name : string;
+  age : number;
+  bio : string;
+  address : string ;
+  photo : string;
+}
+
 export interface TaskItems {
   id: number;
   job: string;
-  assignee: object;
+  assignee: Worker;
   done: boolean;
   cancelled: boolean;
   attachment: string;
@@ -17,7 +26,7 @@ export interface TaskItems {
  */
 export class Task {
   constructor(
-    private id: number,
+    public id: number,
     public job: string,
     public assignee: object,
     public done: boolean,

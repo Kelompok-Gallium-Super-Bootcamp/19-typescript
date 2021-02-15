@@ -1,9 +1,9 @@
 /**
  * @module task-worker-client
  */
-const { client } = require('../lib/http-client');
+import { client } from '../lib/http-client';
 
-const { WORKER_SERVICE_BASEURL } = require('./config');
+import { WORKER_SERVICE_BASEURL } from './config';
 
 /**
  * list all workers

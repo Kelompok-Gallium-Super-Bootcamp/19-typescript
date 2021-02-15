@@ -10,22 +10,29 @@ import {
   ERROR_TASK_DATA_INVALID,
   ERROR_TASK_NOT_FOUND,
 } from './task';
-import {TaskItems} from './task.model'
-const { saveFile, readFile, ERROR_FILE_NOT_FOUND } = require('../lib/storage');
+import { saveFile, readFile, ERROR_FILE_NOT_FOUND } from '../lib/storage';
 // eslint-disable-next-line no-unused-vars
-const { ClientRequest, IncomingMessage, ServerResponse } = require('http');
+import {ClientRequest, IncomingMessage, ServerResponse } from 'http';
 
 /**
  * service to add Task
  * @param {ClientRequest} req
  * @param {ServerResponse} res
  */
+
+ export interface DataWorker{
+   job : string;
+   assigneeId : number;
+   attachment: string;
+ }
+
+
 export function addSvc(req, res) {
   const busboy = new Busboy({ headers: req.headers });
 
   const data = {
     job: '',
-    assignee?.id: 0,
+    assigneeId: 0,
     attachment: null,
   };
 
@@ -119,9 +126,9 @@ export async function listSvc(req, res) {
  * @param {IncomingMessage} req
  * @param {ServerResponse} res
  */
-export async function doneSvc(req, res) {
+export async function doneSvc(req, res) : Promise <any>{
   const uri = url.parse(req.url, true);
-  const id = uri.query['id'];
+  const id = uri.query['id'] ;
   if (!id) {
     res.statusCode = 401;
     res.write('parameter id tidak ditemukan');
@@ -152,7 +159,7 @@ export async function doneSvc(req, res) {
  * @param {IncomingMessage} req
  * @param {ServerResponse} res
  */
-export async function cancelSvc(req, res) {
+export async function cancelSvc(req, res) : Promise <any> {
   const uri = url.parse(req.url, true);
   const id = uri.query['id'];
   if (!id) {
@@ -185,7 +192,7 @@ export async function cancelSvc(req, res) {
  * @param {ClientRequest} req
  * @param {ServerResponse} res
  */
-export async function getAttachmentSvc(req : Request, res : Response) {
+export async function getAttachmentSvc(req , res): Promise <any> {
   const uri = url.parse(req.url, true);
   const objectName = uri.pathname.replace('/attachment/', '');
   if (!objectName) {

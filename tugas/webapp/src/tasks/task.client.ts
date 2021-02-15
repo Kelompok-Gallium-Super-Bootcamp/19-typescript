@@ -1,16 +1,30 @@
 /**
  * @module task-client
  */
-const { client } = require('../lib/http-client');
+import{ client } from '../lib/http-client';
+import { SERVICE_BASEURL } from './config';
 
-const { SERVICE_BASEURL } = require('./config');
+
+export interface TaskData {
+  id: number;
+  job: string;
+  assignee: Worker;
+  done: boolean;
+  cancelled: boolean;
+  attachment: string;
+  addedAt : string;
+}
+
+
 /**
  * add task
  * @function
  * @param {TaskData} data 
  */
-function add(data) {
-  return client.post(`${SERVICE_BASEURL}/add`, data);
+export function add(data : TaskData) {
+  return client.post
+  
+  (`${SERVICE_BASEURL}/add`, data);
 }
 
 /**
