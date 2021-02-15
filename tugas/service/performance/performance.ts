@@ -1,17 +1,23 @@
 /** @module Performance */
 
-const { read, save } = require('../lib/kv');
+import const { read, save } from '../lib/kv';
 
 const TASK_TOTAL_KEY = 'task.total';
 const TASK_DONE_KEY = 'task.done';
 const TASK_CANCELLED_KEY = 'task.cancelled';
 const WORKER_TOTAL_KEY = 'worker.total';
 
+export interface SummaryObject {
+  total_task: number;
+  task_done: number;
+  task_cancelled: number;
+	total_worker: number;
+}
 /**
  * get info summary
- * @returns {Promise<dataTaskandWorker>}
+ * @returns {Promise<SummaryObject>}
  */
-async function summary() {
+export async function summary():SummaryObject  {
   const data = {
     total_task: parseInt((await read(TASK_TOTAL_KEY)) || '0', 10),
     task_done: parseInt((await read(TASK_DONE_KEY)) || '0', 10),
@@ -25,7 +31,7 @@ async function summary() {
  * increase total Task
  * @function increaseTotalTask
  */
-async function increaseTotalTask() {
+export async function increaseTotalTask() {
   const raw = await read(TASK_TOTAL_KEY);
   let val = parseInt(raw || '0', 10);
   val++;
@@ -36,7 +42,7 @@ async function increaseTotalTask() {
  * increase done Task
  * @function increaseDoneTask
  */
-async function increaseDoneTask() {
+export async function increaseDoneTask() {
   const raw = await read(TASK_DONE_KEY);
   let val = parseInt(raw || '0', 10);
   val++;
@@ -47,7 +53,7 @@ async function increaseDoneTask() {
  * increase Cancel Task
  * @function IncreaseCancelledTask
  */
-async function increaseCancelledTask() {
+export async function increaseCancelledTask() {
   const raw = await read(TASK_CANCELLED_KEY);
   let val = parseInt(raw || '0', 10);
   val++;
@@ -58,7 +64,7 @@ async function increaseCancelledTask() {
  * increase Total Worker
  * @function increaseTotalWorker
  */
-async function increaseTotalWorker() {
+export async function increaseTotalWorker() {
   const raw = await read(WORKER_TOTAL_KEY);
   let val = parseInt(raw || '0', 10);
   val++;
@@ -69,7 +75,7 @@ async function increaseTotalWorker() {
  * decrease Total Worker
  * @function decreaseTotalWorker
  */
-async function decreaseTotalWorker() {
+export async function decreaseTotalWorker() {
   const raw = await read(WORKER_TOTAL_KEY);
   let val = parseInt(raw || '0', 10);
   if (val > 0) {
@@ -77,12 +83,3 @@ async function decreaseTotalWorker() {
   }
   await save(WORKER_TOTAL_KEY, val);
 }
-
-module.exports = {
-  summary,
-  increaseTotalTask,
-  increaseDoneTask,
-  increaseCancelledTask,
-  increaseTotalWorker,
-  decreaseTotalWorker,
-};

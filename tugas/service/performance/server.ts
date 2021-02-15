@@ -1,13 +1,13 @@
-const { createServer } = require('http');
-const url = require('url');
-const { stdout } = require('process');
-const { summarySvc } = require('./performance.service');
-const agg = require('./performance.agg');
-const { config } = require('../config');
+import { createServer } from 'http';
+import url from 'url';
+import { stdout } from 'process';
+import { summarySvc } from './performance.service';
+import agg from './performance.agg';
+import { config } '../config';
 
 let server;
 
-function run(callback) {
+export function run(callback) {
   server = createServer((req, res) => {
     // cors
     const aborted = cors(req, res);
@@ -16,16 +16,16 @@ function run(callback) {
     }
 
     function respond(statusCode, message) {
-      res.statusCode = statusCode || 200;
-      res.write(message || '');
-      res.end();
+      res?.statusCode = statusCode || 200;
+      res?.write(message || '');
+      res?.end();
     }
 
     try {
-      const uri = url.parse(req.url, true);
-      switch (uri.pathname) {
+      const uri = url.parse(req?.url, true);
+      switch (uri?.pathname) {
         case '/summary':
-          if (req.method === 'GET') {
+          if (req?.method === 'GET') {
             return summarySvc(req, res);
           } else {
             respond(404);
@@ -57,28 +57,22 @@ function run(callback) {
   });
 }
 
-function cors(req, res) {
+export function cors(req, res) {
   // handle preflight request
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Request-Method', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT');
-  res.setHeader('Access-Control-Allow-Headers', '*');
+  res?.setHeader('Access-Control-Allow-Origin', '*');
+  res?.setHeader('Access-Control-Request-Method', '*');
+  res?.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT');
+  res?.setHeader('Access-Control-Allow-Headers', '*');
 
-  if (req.method === 'OPTIONS') {
+  if (req?.method === 'OPTIONS') {
     res.writeHead(204);
     res.end();
     return true;
   }
 }
 
-function stop() {
+export function stop() {
   if (server) {
     server.close();
   }
 }
-
-module.exports = {
-  run,
-  stop,
-  cors,
-};

@@ -1,7 +1,7 @@
 /** @module LibraryStorage */
 
-const mime = require('mime-types');
-const { Client } = require('minio');
+import mime from 'mime-types';
+import { Client } from 'minio';
 
 const ERROR_REQUIRE_OBJECT_NAME = 'error wajib memasukan nama objek';
 const ERROR_FILE_NOT_FOUND = 'error file tidak ditemukan';
@@ -16,7 +16,7 @@ let bucketname;
  * @returns close function
  * @throws {string} error if fail create new bucket name
  */
-async function connect(_bucketname, options) {
+export async function connect(_bucketname, options) {
   client = new Client({
     ...options,
     useSSL: false,
@@ -25,7 +25,7 @@ async function connect(_bucketname, options) {
   try {
     await client.makeBucket(bucketname);
   } catch (err) {
-    if (err && err.code === 'BucketAlreadyOwnedByYou') {
+    if (err?.code === 'BucketAlreadyOwnedByYou') {
       return;
     }
     throw err;
@@ -37,7 +37,7 @@ async function connect(_bucketname, options) {
  * @param {function} mimetype function mimetype
  * @returns {string} file name random
  */
-function randomFileName(mimetype) {
+export function randomFileName(mimetype) {
   return (
     new Date().getTime() +
     '-' +
@@ -53,7 +53,7 @@ function randomFileName(mimetype) {
  * @param {function} mimetype function mimetype
  * @returns {Promise<File>} save file to storage bucket
  */
-function saveFile(file, mimetype) {
+export function saveFile(file, mimetype) {
   const objectName = randomFileName(mimetype);
   return new Promise((resolve, reject) => {
     client.putObject(bucketname, objectName, file, (err) => {
@@ -73,25 +73,17 @@ function saveFile(file, mimetype) {
  * @throws {string} when objectName is null
  * @throws {string} when filename not found
  */
-async function readFile(objectName) {
+export async function readFile(objectName) {
   if (!objectName) {
     throw ERROR_REQUIRE_OBJECT_NAME;
   }
   try {
     await client.statObject(bucketname, objectName);
   } catch (err) {
-    if (err && err.code === 'NotFound') {
+    if (err?.code === 'NotFound') {
       throw ERROR_FILE_NOT_FOUND;
     }
     throw err;
   }
   return client.getObject(bucketname, objectName);
 }
-
-module.exports = {
-  saveFile,
-  readFile,
-  connect,
-  ERROR_REQUIRE_OBJECT_NAME,
-  ERROR_FILE_NOT_FOUND,
-};
