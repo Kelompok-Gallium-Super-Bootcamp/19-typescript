@@ -9,10 +9,6 @@ import { WORKER_SERVICE_BASEURL } from './config';
  * list all workers
  * @function
  */
-function list() {
+export function list() {
   return client.get(`${WORKER_SERVICE_BASEURL}/list`);
 }
-
-module.exports = {
-  list,
-};

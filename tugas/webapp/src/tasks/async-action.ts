@@ -9,26 +9,17 @@ import {
   workersLoadedAction,
   addedAction,
 } from './store';
-import workerSvc from './worker.client';
-import taskSvc from './task.client';
-
+import * as workerSvc from './worker.client';
+import * as taskSvc from './task.client';
+import {TaskData} from '../../typing'
 /**
  * add new task
  * @function
  * @param {TaskData} data item yang akan ditambahkan pada task
  */
-export interface Task {
-  id?: number;
-  job: string;
-  assignee?: object;
-  done: boolean;
-  cancelled: boolean;
-  attachment: string;
-  addedAt : string;
-}
 
 
-export const add = (data : Task) => async (dispatch) => {
+export const add = (data : TaskData) => async (dispatch) => {
   dispatch(loadingAction());
   try {
     const task = await taskSvc.add(data);
@@ -43,7 +34,7 @@ export const add = (data : Task) => async (dispatch) => {
  * @function
  * @param {number} id merubah status task menjadi done malalui id
  */
-export const  done = (id) => async (dispatch) => {
+export const  done = (id:number) => async (dispatch) => {
   dispatch(loadingAction());
   try {
     await taskSvc.done(id);
@@ -58,7 +49,7 @@ export const  done = (id) => async (dispatch) => {
  * @function
  * @param {number} id merubah status task menjadi cancelled malalui id
  */
-export const  cancel = (id) => async (dispatch) => {
+export const  cancel = (id:number) => async (dispatch) => {
   dispatch(loadingAction());
   try {
     await taskSvc.cancel(id);

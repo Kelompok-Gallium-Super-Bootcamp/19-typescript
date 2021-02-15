@@ -126,7 +126,7 @@ export async function listSvc(req, res) {
  * @param {IncomingMessage} req
  * @param {ServerResponse} res
  */
-export async function doneSvc(req, res) : Promise <any>{
+export async function doneSvc(req, res){
   const uri = url.parse(req.url, true);
   const id = uri.query['id'] ;
   if (!id) {

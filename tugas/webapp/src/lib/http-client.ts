@@ -94,11 +94,9 @@ client.post = (endpoint : string, body : TaskData, customConf: any= {}) => {
  * @param {Object} json isi request
  * @param {RequestInit} option tambahan opsi request
  */
-client.put = (endpoint :string , body : TaskData, json : JSON, customConf = {}) => {
+client.put = (endpoint :string , body? : TaskData, json? :JSON, customConf = {}) => {
   const config : RequestOption = {
-    json,
-    method: 'PUT', 
-    body : body,
+    method: 'PUT',    
     ...customConf 
   }
   return client(endpoint, config);
@@ -111,7 +109,7 @@ client.put = (endpoint :string , body : TaskData, json : JSON, customConf = {}) 
  * @param {Object} json isi request
  * @param {RequestInit} option tambahan opsi request
  */
-client.del = (endpoint: string, body : TaskData, json :JSON , customConf = {}) => {
+client.del = (endpoint: string, body? : TaskData, json? :JSON , customConf = {}) => {
   const config :RequestOption = {
     json, 
     method: 'DELETE',

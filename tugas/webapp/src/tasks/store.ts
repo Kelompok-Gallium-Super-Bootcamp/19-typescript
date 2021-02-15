@@ -28,14 +28,14 @@ CLEAR_ERROR = 'clearError'
 }
 
 
-const errorAction = createAction<TaskState>(ActionType.ERROR);
-const loadingAction = createAction<TaskState>(ActionType.LOADING);
-const addedAction = createAction<TaskState>(ActionType.ADDED);
-const doneAction = createAction<TaskState>(ActionType.DONE);
-const canceledAction = createAction<TaskState>(ActionType.CANCELED);
-const tasksLoadedAction = createAction<TaskState>(ActionType.TASK_LOADED);
-const workersLoadedAction = createAction<TaskState>(ActionType.WORKER_LOADED);
-const clearErrorAction = createAction<TaskState>(ActionType.CLEAR_ERROR);
+export const errorAction = createAction<TaskState>(ActionType.ERROR);
+export const loadingAction = createAction<TaskState>(ActionType.LOADING);
+export const addedAction = createAction<TaskState>(ActionType.ADDED);
+export const doneAction = createAction<TaskState>(ActionType.DONE);
+export const canceledAction = createAction<TaskState>(ActionType.CANCELED);
+export const tasksLoadedAction = createAction<TaskState>(ActionType.TASK_LOADED);
+export const workersLoadedAction = createAction<TaskState>(ActionType.WORKER_LOADED);
+export const clearErrorAction = createAction<TaskState>(ActionType.CLEAR_ERROR);
 
 
 
@@ -56,14 +56,3 @@ const store$ = configureStore({
   middleware: [thunkMiddleware],
 });
 
-module.exports = {
-  store$,
-  errorAction,
-  loadingAction,
-  addedAction,
-  doneAction,
-  canceledAction,
-  tasksLoadedAction,
-  workersLoadedAction,
-  clearErrorAction,
-};

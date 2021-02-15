@@ -1,12 +1,16 @@
 import { SERVICE_BASEURL } from './config';
 
 export interface Worker {
-  assigneed : number ;
+  id : number ;
   name : string;
   age : number;
   bio : string;
   address : string ;
   photo : string;
+}
+
+export interface Error {
+  payload : string;
 }
 
 export interface Task {
@@ -19,6 +23,7 @@ export interface Task {
   addedAt: string;
 }
 
+
 export interface TaskState {
   id: number;
   job: string;
@@ -26,12 +31,14 @@ export interface TaskState {
   done: boolean;  
   attachment: string;
 }
-
-
+export interface WorkerState {
+  id : number ;
+  name : string;
+}
 export interface State {
   loading: boolean;
   error : string | null;
-  workers : Worker[];
+  workers : WorkerState[];
   tasks : TaskState[];
 }
 
@@ -39,13 +46,30 @@ export interface Action {
   type: string;
   payload : Task;
 }
+export interface ActionWorker {
+  type: string;
+  payload : Worker[];
+}
+export interface ActionList {
+  type: string;
+  payload : Task[];
+}
+export interface ActionDone {
+  type: string;
+  payload : boolean;
+}
 
 // setup state
 export const initialState = {
   loading: false,
   error: null,
   workers: [],
-  tasks: [],
+  tasks: [{
+    id : 1,
+    job: 'cooking',
+    assignee : 'budi',
+    done: false,
+  }],
 };
 
 export function loading(state : State) {
@@ -53,7 +77,7 @@ export function loading(state : State) {
   state.error = null;
 }
 
-export function error(state :State,  action) {
+export function error(state :State,  action: Error ) {
   state.loading = false;
   state.error = action.payload;
 }
@@ -63,7 +87,7 @@ export function error(state :State,  action) {
  * @function
  * @param {Object} state 
  */
-export function clearError(state) {
+export function clearError(state : State) {
   state.error = null;
 }
 
@@ -97,7 +121,7 @@ export function added(state :State,  action : Action) {
  * @param {function} action 
  * @returns {Object}
  */
-export function done(state :State,  action) {
+export function done(state :State,  action: ActionDone) {
   const idx = state.tasks.findIndex((t) => t.id === action.payload);
   state.tasks[idx].done = true;
   state.loading = false;
@@ -127,7 +151,7 @@ export function canceled(state :State,  action) {
  * @param {function} action 
  * @returns {Object}
  */
-export function tasksLoaded(state :State,  action) {
+export function tasksLoaded(state :State,  action : ActionList) {
   state.tasks = action.payload
     .filter((t) => !t.cancelled)
     .map((task) => ({
@@ -149,7 +173,7 @@ export function tasksLoaded(state :State,  action) {
  * @param {function} action 
  * @returns {Object}
  */
-export function workersLoaded(state :State,  action) {
+export function workersLoaded(state : State,  action: ActionWorker ) {
   state.workers = action.payload.map((worker) => ({
     id: worker.id,
     name: worker.name,

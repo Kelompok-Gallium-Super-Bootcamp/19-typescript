@@ -7,5 +7,5 @@
       "strictNullChecks": false,   
       "moduleResolution": "Node"
     },
-    "include": ["./*/**"]
+    "include": ["./tasks/**/*"]
   }
