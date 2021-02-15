@@ -1,16 +1,15 @@
-const { createServer } = require('http');
-const url = require('url');
-const { stdout } = require('process');
-const {
-  addSvc,
-  cancelSvc,
-  doneSvc,
-  listSvc,
-  getAttachmentSvc,
-} = require('./task.service');
-const { config } = require('../config');
+import { createServer } from 'http';
+import * as url from 'url';
+import { stdout } from 'process';
+import {
+  add as addSvc,
+  cancel as cancelSvc,
+  done as doneSvc,
+  list as listSvc,
+  info as getAttachmentSvc,
+} from './task.service';
 
-let server;
+export let server;
 
 function run(callback) {
   server = createServer((req, res) => {
@@ -76,13 +75,13 @@ function run(callback) {
   });
 
   // run server
-  const PORT = config.serverTask.port;
+  const PORT = 7002;
   server.listen(PORT, () => {
     stdout.write(`🚀 task service listening on port ${PORT}\n`);
   });
 }
 
-function cors(req, res) {
+export function cors(req, res) {
   // handle preflight request
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Request-Method', '*');
@@ -99,7 +98,7 @@ function cors(req, res) {
   }
 }
 
-function stop() {
+export function stop() {
   if (server) {
     server.close();
   }

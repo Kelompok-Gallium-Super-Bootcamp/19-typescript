@@ -1,9 +1,9 @@
 /** @module LibraryKv */
 
-const redis = require('redis');
-const { promisify } = require('util');
+import * as redis from 'redis';
+import { promisify } from 'util';
 
-let client;
+export default let client;
 
 /**
  * function connect
@@ -11,10 +11,10 @@ let client;
  * @returns {Promse<Client>}
  */
 function connect(options) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve, reject)  =>  {
     client = redis.createClient(options);
     client.on('connect', () => {
-      resolve();
+     void resolve() ;
     });
     client.on('error', (err) => {
       reject(err);

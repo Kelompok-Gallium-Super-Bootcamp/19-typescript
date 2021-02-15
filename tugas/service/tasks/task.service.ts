@@ -1,15 +1,16 @@
-const Busboy = require('busboy');
-const url = require('url');
-const mime = require('mime-types');
-const { Writable } = require('stream');
-const {
+import * as Busboy from 'busboy';
+import * as url from 'url';
+import * as mime from 'mime-types';
+import { Writable } from 'stream';
+import {
   add,
   cancel,
   done,
   list,
   ERROR_TASK_DATA_INVALID,
   ERROR_TASK_NOT_FOUND,
-} = require('./task');
+} from './task';
+import {TaskItems} from './task.model'
 const { saveFile, readFile, ERROR_FILE_NOT_FOUND } = require('../lib/storage');
 // eslint-disable-next-line no-unused-vars
 const { ClientRequest, IncomingMessage, ServerResponse } = require('http');
@@ -19,12 +20,12 @@ const { ClientRequest, IncomingMessage, ServerResponse } = require('http');
  * @param {ClientRequest} req
  * @param {ServerResponse} res
  */
-function addSvc(req, res) {
+export function addSvc(req, res) {
   const busboy = new Busboy({ headers: req.headers });
 
   const data = {
     job: '',
-    assigneeId: 0,
+    assignee?.id: 0,
     attachment: null,
   };
 
@@ -100,7 +101,7 @@ function addSvc(req, res) {
  * @param {IncomingMessage} req
  * @param {ServerResponse} res
  */
-async function listSvc(req, res) {
+export async function listSvc(req, res) {
   try {
     const tasks = await list();
     res.setHeader('content-type', 'application/json');
@@ -118,7 +119,7 @@ async function listSvc(req, res) {
  * @param {IncomingMessage} req
  * @param {ServerResponse} res
  */
-async function doneSvc(req, res) {
+export async function doneSvc(req, res) {
   const uri = url.parse(req.url, true);
   const id = uri.query['id'];
   if (!id) {
@@ -151,7 +152,7 @@ async function doneSvc(req, res) {
  * @param {IncomingMessage} req
  * @param {ServerResponse} res
  */
-async function cancelSvc(req, res) {
+export async function cancelSvc(req, res) {
   const uri = url.parse(req.url, true);
   const id = uri.query['id'];
   if (!id) {
@@ -184,7 +185,7 @@ async function cancelSvc(req, res) {
  * @param {ClientRequest} req
  * @param {ServerResponse} res
  */
-async function getAttachmentSvc(req, res) {
+export async function getAttachmentSvc(req : Request, res : Response) {
   const uri = url.parse(req.url, true);
   const objectName = uri.pathname.replace('/attachment/', '');
   if (!objectName) {
@@ -211,10 +212,3 @@ async function getAttachmentSvc(req, res) {
   }
 }
 
-module.exports = {
-  listSvc,
-  addSvc,
-  doneSvc,
-  cancelSvc,
-  getAttachmentSvc,
-};
