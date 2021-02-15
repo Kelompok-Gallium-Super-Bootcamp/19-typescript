@@ -1,4 +1,4 @@
-import bus from '../lib/bus';
+import * as bus from '../lib/bus';
 import {
   increaseTotalTask,
   increaseDoneTask,

@@ -6,5 +6,5 @@
     "target": "ES6",
     "moduleResolution": "Node"
   },
-  "include": ["./src/**/*"]
+  "include": ["./webapp/src/**/*"]
 }

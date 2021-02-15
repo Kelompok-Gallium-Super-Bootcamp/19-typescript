@@ -33,19 +33,19 @@ refresh.onclick = () => {
 function render(state:StateObject) {
   // render error
   if (state?.error) {
-    errorTxt?.textContent = state.error.toString();
+    errorTxt.textContent = state.error.toString();
   } else {
-    errorTxt?.textContent = '';
+    errorTxt.textContent = '';
   }
   if (state.loading) {
-    loadingTxt?.style = '';
+    loadingTxt.style.display = '';
   } else {
-    loadingTxt?.style = 'display:none;';
+    loadingTxt.style.display = 'none;';
   }
 
   // render list of worker
-  workers?.innerText = state?.summary?.total_worker.toString();
-  tasks?.innerText = state?.summary?.total_task.toString();
-  done?.innerText = state?.summary?.task_done.toString();
-  canceled?.innerText = state?.summary?.task_cancelled.toString();
+  workers.innerText = state?.summary?.total_worker.toString();
+  tasks.innerText = state?.summary?.total_task.toString();
+  done.innerText = state?.summary?.task_done.toString();
+  canceled.innerText = state?.summary?.task_cancelled.toString();
 }

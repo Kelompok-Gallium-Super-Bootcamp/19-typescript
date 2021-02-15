@@ -1,6 +1,6 @@
 /** @module LibraryKv */
 
-import redis from 'redis';
+import * as redis from 'redis';
 import { promisify } from 'util';
 
 let client;
@@ -10,11 +10,11 @@ let client;
  * @param {Object} options config for connect kv
  * @returns {Promse<Client>}
  */
-export function connect(options) {
+export function connect(options?: any) {
   return new Promise((resolve, reject) => {
     client = redis.createClient(options);
     client.on('connect', () => {
-      resolve();
+      resolve('');
     });
     client.on('error', (err) => {
       reject(err);

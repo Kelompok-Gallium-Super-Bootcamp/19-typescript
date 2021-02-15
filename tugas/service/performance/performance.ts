@@ -1,6 +1,6 @@
 /** @module Performance */
 
-import const { read, save } from '../lib/kv';
+import { read, save } from '../lib/kv';
 
 const TASK_TOTAL_KEY = 'task.total';
 const TASK_DONE_KEY = 'task.done';
@@ -17,7 +17,7 @@ export interface SummaryObject {
  * get info summary
  * @returns {Promise<SummaryObject>}
  */
-export async function summary():SummaryObject  {
+export async function summary():Promise<SummaryObject>  {
   const data = {
     total_task: parseInt((await read(TASK_TOTAL_KEY)) || '0', 10),
     task_done: parseInt((await read(TASK_DONE_KEY)) || '0', 10),

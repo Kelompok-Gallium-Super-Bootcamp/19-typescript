@@ -13,7 +13,7 @@ export interface RequestOption {
  * @param {RequestInit} options tambahan opsi request
  * @return {Promise<any>} hasil request
  */
-export async function client(endpoint: string, json?: any, options: RequestOption = {}): Promise<any> {
+export async function client(endpoint: string, json?: any, options?: RequestOption): Promise<any> {
   let headers;
   if (json) {
     headers = { 'Content-Type': 'application/json' };
@@ -33,8 +33,8 @@ export async function client(endpoint: string, json?: any, options: RequestOptio
       config.body = JSON.stringify(options?.body);
     } else {
       const formData = new FormData();
-      for (const name in body) {
-        formData.append(name, body[name]);
+      for (const name in options?.body) {
+        formData.append(name, options?.body[name]);
       }
       config.body = formData;
     }

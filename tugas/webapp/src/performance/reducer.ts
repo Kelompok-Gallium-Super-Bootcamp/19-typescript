@@ -43,8 +43,8 @@ export const initialState: StateObject = {
  * @return {StateObject} state
  */
 export function loading(state: StateObject): StateObject {
-  state?.loading = true;
-  state?.error = null;
+  state.loading = true;
+  state.error = null;
 	return state;
 }
 
@@ -56,8 +56,8 @@ export function loading(state: StateObject): StateObject {
  * @return {StateObject} state
  */
 export function error(state: StateObject, action:ActionObjectErr): StateObject {
-  state?.loading = false;
-  state?.error = action?.payload;
+  state.loading = false;
+  state.error = action?.payload;
 	return state;
 }
 
@@ -72,9 +72,9 @@ export function error(state: StateObject, action:ActionObjectErr): StateObject {
  * @return {StateObject} state
  */
 export function summaryLoaded(state: StateObject, action: ActionObjectSum): StateObject {
-  state?.summary = action?.payload;
-  state?.loading = false;
-  state?.error = null;
+  state.summary = action?.payload;
+  state.loading = false;
+  state.error = null;
   return state;
 }
 
