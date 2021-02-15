@@ -7,7 +7,7 @@ const { SERVICE_BASEURL } = require('./config');
 /**
  * add task
  * @function
- * @param {TaskData} data 
+ * @param {TaskData} data
  */
 function add(data) {
   return client.post(`${SERVICE_BASEURL}/add`, data);
@@ -15,7 +15,7 @@ function add(data) {
 
 /**
  * list all tasks
- * @function 
+ * @function
  */
 function list() {
   return client.get(`${SERVICE_BASEURL}/list`);
@@ -24,7 +24,7 @@ function list() {
 /**
  * cancel task with spesific id
  * @function
- * @param {number} id 
+ * @param {number} id
  */
 function cancel(id) {
   return client.put(`${SERVICE_BASEURL}/cancel?id=${id}`);
@@ -33,7 +33,7 @@ function cancel(id) {
 /**
  * change done task status with spesific id
  * @function
- * @param {number} id 
+ * @param {number} id
  */
 function done(id) {
   return client.put(`${SERVICE_BASEURL}/done?id=${id}`);

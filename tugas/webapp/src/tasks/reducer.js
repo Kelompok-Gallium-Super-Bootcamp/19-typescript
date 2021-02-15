@@ -21,7 +21,7 @@ function error(state, action) {
 /**
  * mengubah state error menjadu null
  * @function
- * @param {Object} state 
+ * @param {Object} state
  */
 function clearError(state) {
   state.error = null;
@@ -32,8 +32,8 @@ function clearError(state) {
 /**
  * menambahkan item pada state
  * @function
- * @param {Object} state 
- * @param {function} action 
+ * @param {Object} state
+ * @param {function} action
  * @returns {state}
  */
 function added(state, action) {
@@ -53,8 +53,8 @@ function added(state, action) {
 /**
  * mengubah status done pada task tertentu menjadi true
  * @function
- * @param {Object} state 
- * @param {function} action 
+ * @param {Object} state
+ * @param {function} action
  * @returns {Object}
  */
 function done(state, action) {
@@ -68,8 +68,8 @@ function done(state, action) {
 /**
  * mengubah status cancel pada task tertentu menjadi true
  * @function
- * @param {Object} state 
- * @param {function} action 
+ * @param {Object} state
+ * @param {function} action
  * @returns {Object}
  */
 function canceled(state, action) {
@@ -83,8 +83,8 @@ function canceled(state, action) {
 /**
  * me-load semua task yang ada pada db
  * @function
- * @param {Object} state 
- * @param {function} action 
+ * @param {Object} state
+ * @param {function} action
  * @returns {Object}
  */
 function tasksLoaded(state, action) {
@@ -105,8 +105,8 @@ function tasksLoaded(state, action) {
 /**
  * me-load semua worker yang ada pada db
  * @function
- * @param {Object} state 
- * @param {function} action 
+ * @param {Object} state
+ * @param {function} action
  * @returns {Object}
  */
 function workersLoaded(state, action) {

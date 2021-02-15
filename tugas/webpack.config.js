@@ -19,13 +19,13 @@ module.exports = {
     contentBase: './webapp/www',
     port: 7000,
   },
-	plugins: [
+  plugins: [
     new DotenvWebpackPlugin({
       path: './.env',
       safe: true,
     }),
   ],
-	resolve: {
+  resolve: {
     extensions: ['.js', '.ts'],
   },
   module: {
@@ -34,11 +34,11 @@ module.exports = {
         test: /\.css$/i,
         use: ['style-loader', 'css-loader'],
       },
-			{
+      {
         test: /\.yaml$/,
         use: [{ loader: 'json-loader' }, { loader: 'yaml-loader' }],
       },
-			{
+      {
         test: /\.ts$/,
         loader: 'ts-loader',
         exclude: /node_modules/,

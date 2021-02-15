@@ -12,7 +12,7 @@ const workerSvc = require('./worker.client');
 /**
  * memasukkan data pekerja
  * @function
- * @param {WorkerData} data 
+ * @param {WorkerData} data
  */
 exports.register = (data) => async (dispatch) => {
   dispatch(loadingAction());
@@ -41,7 +41,7 @@ exports.remove = (id) => async (dispatch) => {
 
 /**
  * memuat semua data pekerja
- * @function 
+ * @function
  */
 exports.getList = async (dispatch) => {
   dispatch(loadingAction());
