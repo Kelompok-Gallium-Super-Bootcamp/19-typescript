@@ -1,12 +1,12 @@
-const { loadingAction, errorAction, summaryLoadedAction } = require('./store');
-const perfSvc = require('./performance.client');
+import { loadingAction, errorAction, summaryLoadedAction } from './store';
+import * as perfSvc from './performance.client';
 
 /**
  * @async
  * @method 
  * @param {Function} dispatch
  */
-exports.summary = async (dispatch) => {
+export const summary = async (dispatch: any) => {
   dispatch(loadingAction());
   try {
     const summary = await perfSvc.summary();

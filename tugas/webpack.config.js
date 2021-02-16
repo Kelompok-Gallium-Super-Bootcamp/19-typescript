@@ -3,9 +3,9 @@ const path = require('path');
 
 module.exports = {
   entry: {
-    tasks: './src/tasks/main.js',
-    worker: './src/worker/main.js',
-    performance: './src/performance/main.js',
+    tasks: './webapp/src/tasks/main.js',
+    worker: './webapp/src/worker/main.js',
+    performance: './webapp/src/performance/main.ts',
     workerschema: './schema/worker.js',
     taskschema: './schema/task.js',
     performanceschema: './schema/performance.js',
@@ -16,16 +16,16 @@ module.exports = {
   },
   devtool: 'inline-source-map',
   devServer: {
-    contentBase: './webapp//www',
+    contentBase: './webapp/www',
     port: 7000,
   },
-	plugins: [
+  plugins: [
     new DotenvWebpackPlugin({
       path: './.env',
       safe: true,
     }),
   ],
-	resolve: {
+  resolve: {
     extensions: ['.js', '.ts'],
   },
   module: {
@@ -34,11 +34,11 @@ module.exports = {
         test: /\.css$/i,
         use: ['style-loader', 'css-loader'],
       },
-			{
+      {
         test: /\.yaml$/,
         use: [{ loader: 'json-loader' }, { loader: 'yaml-loader' }],
       },
-			{
+      {
         test: /\.ts$/,
         loader: 'ts-loader',
         exclude: /node_modules/,

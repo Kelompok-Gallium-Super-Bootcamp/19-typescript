@@ -8,7 +8,7 @@
  * @property {boolean} cancelled keterangan selesai/tidaknya pekerjaan
  */
 
- /**
+/**
  * WorkerData type definition
  * @typedef {Object} WorkerData
  * @property {number} id id of a worker
