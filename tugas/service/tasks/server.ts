@@ -8,10 +8,11 @@ import {
   listSvc,
   getAttachmentSvc,
 } from './task.service';
+import {config} from '../config'
 
-export let server;
+let server;
 
-function run(callback) {
+export function run(callback) {
   server = createServer((req, res) => {
     // cors
     const aborted = cors(req, res);
@@ -75,7 +76,7 @@ function run(callback) {
   });
 
   // run server
-  const PORT = 7002;
+  const PORT = config.serverTask.port;
   server.listen(PORT, () => {
     stdout.write(`🚀 task service listening on port ${PORT}\n`);
   });
@@ -103,9 +104,3 @@ export function stop() {
     server.close();
   }
 }
-
-module.exports = {
-  run,
-  stop,
-  cors,
-};
