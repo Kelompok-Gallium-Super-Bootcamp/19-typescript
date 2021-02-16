@@ -26,7 +26,7 @@ export async function add(data : DataWorker ): Promise<any> {
   return task;
 }
 
-export async function done (id: string){
+export async function done (id){
   const taskRepo = getConnection().getRepository<Task>('Task');
   const task = await taskRepo.findOne(id, { relations: ['assignee'] }) ;
   if (!task || task?.cancelled) {
@@ -41,7 +41,7 @@ export async function done (id: string){
   return task;
 }
 
-export async function cancel(id :string) : Promise<any> {
+export async function cancel(id) : Promise<any> {
   const taskRepo = getConnection().getRepository<Task>('Task');
   const task = await taskRepo.findOne(id, { relations: ['assignee'] });
   if (!task || task?.cancelled) {

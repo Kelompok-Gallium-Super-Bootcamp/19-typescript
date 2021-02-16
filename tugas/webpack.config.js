@@ -3,8 +3,8 @@ const path = require('path');
 
 module.exports = {
   entry: {
-    tasks: './webapp/src/tasks/main.js',
-    worker: './webapp/src/worker/main.js',
+    tasks: './webapp/src/tasks/main.ts',
+    worker: './webapp/src/worker/main.ts',
     performance: './webapp/src/performance/main.ts',
     workerschema: './schema/worker.js',
     taskschema: './schema/task.js',

@@ -3,12 +3,12 @@ import { store$, errorAction, clearErrorAction } from './store';
 
 import './main.css';
 
-const form = document.getElementById('form');
-const name = document.getElementById('name');
-const age = document.getElementById('age');
-const photo = document.getElementById('photo');
-const bio = document.getElementById('bio');
-const address = document.getElementById('address');
+const form = <HTMLFormElement>document.getElementById('form');
+const name = <HTMLInputElement>document.getElementById('name');
+const age = <HTMLInputElement>document.getElementById('age');
+const photo = <HTMLInputElement>document.getElementById('photo');
+const bio = <HTMLInputElement>document.getElementById('bio');
+const address = <HTMLInputElement>document.getElementById('address');
 const list = document.getElementById('list');
 const errorTxt = document.getElementById('error-text');
 const loadingTxt = document.getElementById('loading-text');

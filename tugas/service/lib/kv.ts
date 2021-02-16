@@ -15,7 +15,7 @@ interface OptionsKv {
  * @param {Object} options config for connect kv
  * @returns {Promse<Client>}
  */
-export function connect(options : OptionsKv) {
+export function connect(options? : OptionsKv) {
   return new Promise((resolve, reject) =>  {
     client = redis.createClient(options);
     client.on('connect', () => {

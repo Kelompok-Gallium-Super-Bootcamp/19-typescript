@@ -1,16 +1,6 @@
 import { createConnection } from 'typeorm';
 
-export interface Config {
-    type: string;
-    host: string;
-    port: number;
-    username: string;
-    password: string;
-    database: string;
-}
-
-
-export function connect(entities : Object, config : Config) {
+export function connect(entities, config) {
   return createConnection({
     ...config,
     synchronize: true,

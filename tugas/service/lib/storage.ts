@@ -60,7 +60,7 @@ export function randomFileName(mimetype: string): string {
  * @param {function} mimetype function mimetype
  * @returns {Promise<File>} save file to storage bucket
  */
-export function saveFile(file, mimetype) {
+export function saveFile(file, mimetype): Promise<string> {
   const objectName = randomFileName(mimetype);
   return new Promise((resolve, reject) => {
     client.putObject(bucketname, objectName, file, (err) => {

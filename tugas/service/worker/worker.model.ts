@@ -4,19 +4,26 @@ import { EntitySchema } from 'typeorm';
 export interface DataWorker{
   id: number,
   name: string,
-  age: string,
+  age: number,
   bio: string,
   address: string,
   photo: string
 }
 
+export interface WorkerRegis{
+  name: string,
+  age: number,
+  bio: string,
+  address: string,
+  photo: string
+}
 /**
  * worker model
  */
 export class Worker {
   public id: number;
   public name: string;
-  public age: string;
+  public age: number;
   public bio: string;
   public address: string;
   public photo: string;

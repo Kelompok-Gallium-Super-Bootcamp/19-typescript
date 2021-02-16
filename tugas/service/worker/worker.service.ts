@@ -20,7 +20,7 @@ import { ClientRequest, IncomingMessage, ServerResponse } from 'http';
  * @param {IncomingMessage} req
  * @param {ServerResponse} res
  */
-export function registerSvc(req: IncomingMessage, res: ServerResponse) {
+export function registerSvc(req, res) {
   const busboy = new Busboy({ headers: req.headers });
 
   const data = {
@@ -97,7 +97,7 @@ export function registerSvc(req: IncomingMessage, res: ServerResponse) {
  * @param {IncomingMessage} req
  * @param {ServerResponse} res
  */
-export async function listSvc(req: IncomingMessage, res: ServerResponse) {
+export async function listSvc(req, res) {
   try {
     const workers = await list();
     res.setHeader('content-type', 'application/json');
@@ -147,7 +147,7 @@ export async function infoSvc(req, res) {
  * @param {ClientRequest} req
  * @param {ServerResponse} res
  */
-export async function removeSvc(req: ClientRequest, res: ServerResponse): Promise<void> {
+export async function removeSvc(req, res): Promise<void> {
   const uri = url.parse(req.url, true);
   const id = uri.query['id'] as string;
   if (!id) {
@@ -180,7 +180,7 @@ export async function removeSvc(req: ClientRequest, res: ServerResponse): Promis
  * @param {ClientRequest} req
  * @param {ServerResponse} res
  */
-export async function getPhotoSvc(req: ClientRequest, res: ServerResponse): Promise<void> {
+export async function getPhotoSvc(req, res): Promise<void> {
   const uri = url.parse(req.url, true);
   const objectName = uri.pathname.replace('/photo/', '');
   if (!objectName) {

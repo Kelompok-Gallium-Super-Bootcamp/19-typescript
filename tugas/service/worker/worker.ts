@@ -1,7 +1,7 @@
 /** @module Worker */
 
 import { getConnection } from 'typeorm';
-import { DataWorker, Worker } from './worker.model';
+import { DataWorker, Worker, WorkerRegis } from './worker.model';
 import * as bus from '../lib/bus';
 
 export const ERROR_REGISTER_DATA_INVALID = 'data registrasi pekerja tidak lengkap';
@@ -13,7 +13,7 @@ export const ERROR_WORKER_NOT_FOUND = 'pekerja tidak ditemukan';
  * @returns {Promise<worker>} new worker detail with id
  * @throws {string} when data null
  */
-export async function register(data: DataWorker): Promise<Worker> {
+export async function register(data: WorkerRegis): Promise<DataWorker> {
   if (!data.name || !data.age || !data.bio || !data.address || !data.photo) {
     throw ERROR_REGISTER_DATA_INVALID;
   }
@@ -21,7 +21,7 @@ export async function register(data: DataWorker): Promise<Worker> {
   const worker = new Worker(
     null,
     data.name,
-    parseInt(data.age, 10),
+    data.age,
     data.bio,
     data.address,
     data.photo
@@ -35,7 +35,7 @@ export async function register(data: DataWorker): Promise<Worker> {
  * get list of worker
  * @return {Promise<Worker[]>} list of worker
  */
-export function list(): Promise<Worker[]> {
+export function list(): Promise<DataWorker[]> {
   const workerRepo = getConnection().getRepository<Worker>('Worker');
   return workerRepo.find();
 }
@@ -46,7 +46,7 @@ export function list(): Promise<Worker[]> {
  * @returns {Promise<Worker>} get info worker
  * @throws {string} when info worker not found in database
  */
-export async function info(id: string): Promise<Worker> {
+export async function info(id: string): Promise<DataWorker> {
   const workerRepo = getConnection().getRepository<Worker>('Worker');
   const worker = await workerRepo.findOne(id);
   if (!worker) {
@@ -61,7 +61,7 @@ export async function info(id: string): Promise<Worker> {
  * @returns {Promise<Worker>} remove Worker
  * @throws {string} when worker not found in database
  */
-export async function remove(id: string): Promise<Worker> {
+export async function remove(id: string): Promise<DataWorker> {
   const workerRepo = getConnection().getRepository<Worker>('Worker');
   const worker = await workerRepo.findOne(id);
   if (!worker) {

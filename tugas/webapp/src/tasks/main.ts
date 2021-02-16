@@ -9,10 +9,10 @@ import  { store$, errorAction, clearErrorAction } from './store';
 
 import './main.css';
 
-const form = document.getElementById('form');
-const job = document.getElementById('job');
-const assignee = document.getElementById('assignee');
-const attachment = document.getElementById('attachment');
+const form = <HTMLFormElement>document.getElementById('form');
+const job = <HTMLInputElement>document.getElementById('job');
+const assignee = <HTMLSelectElement>document.getElementById('assignee');
+const attachment = <HTMLInputElement>document.getElementById('attachment');
 const list = document.getElementById('list');
 const errorTxt = document.getElementById('error-text');
 const loadingTxt = document.getElementById('loading-text');
@@ -61,9 +61,9 @@ function render(state) {
     errorTxt.textContent = '';
   }
   if (state.loading) {
-    loadingTxt.style = '';
+    loadingTxt.style.display = '';
   } else {
-    loadingTxt.style = 'display:none;';
+    loadingTxt.style.display = 'none';
   }
 
   // add asignee options

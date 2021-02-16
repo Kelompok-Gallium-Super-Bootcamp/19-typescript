@@ -28,14 +28,14 @@ CLEAR_ERROR = 'clearError'
 }
 
 
-export const errorAction = createAction<TaskState>(ActionType.ERROR);
-export const loadingAction = createAction<TaskState>(ActionType.LOADING);
-export const addedAction = createAction<TaskState>(ActionType.ADDED);
-export const doneAction = createAction<TaskState>(ActionType.DONE);
-export const canceledAction = createAction<TaskState>(ActionType.CANCELED);
-export const tasksLoadedAction = createAction<TaskState>(ActionType.TASK_LOADED);
-export const workersLoadedAction = createAction<TaskState>(ActionType.WORKER_LOADED);
-export const clearErrorAction = createAction<TaskState>(ActionType.CLEAR_ERROR);
+export const errorAction = createAction<string>(ActionType.ERROR);
+export const loadingAction = createAction(ActionType.LOADING);
+export const addedAction = createAction(ActionType.ADDED);
+export const doneAction = createAction(ActionType.DONE);
+export const canceledAction = createAction(ActionType.CANCELED);
+export const tasksLoadedAction = createAction(ActionType.TASK_LOADED);
+export const workersLoadedAction = createAction(ActionType.WORKER_LOADED);
+export const clearErrorAction = createAction(ActionType.CLEAR_ERROR);
 
 
 
@@ -51,7 +51,7 @@ const reducer = createReducer(initialState, {
   [ActionType.CLEAR_ERROR]: tasksLoaded,
 });
 
-const store$ = configureStore({
+export const store$ = configureStore({
   reducer,
   middleware: [thunkMiddleware],
 });
