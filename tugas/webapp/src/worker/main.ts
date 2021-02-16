@@ -1,7 +1,7 @@
-const { register, getList, remove } = require('./async-action');
-const { store$, errorAction, clearErrorAction } = require('./store');
+import { register, getList, remove } from './async-action';
+import { store$, errorAction, clearErrorAction } from './store';
 
-require('./main.css');
+import './main.css';
 
 const form = document.getElementById('form');
 const name = document.getElementById('name');

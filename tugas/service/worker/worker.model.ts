@@ -1,20 +1,42 @@
 /** @module WorkerModel */
-const { EntitySchema } = require('typeorm');
+import { EntitySchema } from 'typeorm';
+
+export interface DataWorker{
+  id: number,
+  name: string,
+  age: string,
+  bio: string,
+  address: string,
+  photo: string
+}
 
 /**
  * worker model
  */
-class Worker {
+export class Worker {
+  public id: number;
+  public name: string;
+  public age: string;
+  public bio: string;
+  public address: string;
+  public photo: string;
   /**
    * create new instance of worker model
-   * @param {string} id id of a worker
+   * @param {number} id id of a worker
    * @param {string} name name worker
-   * @param {integer} age age worker
+   * @param {string} age age worker
    * @param {string} bio bio worker
    * @param {string} address address worker
    * @param {string} photo name file photo worker
    */
-  constructor(id, name, age, bio, address, photo) {
+  constructor(
+    id: number,
+    name: string,
+    age: number,
+    bio: string,
+    address: string,
+    photo: string
+    ) {
     this.id = id;
     this.name = name;
     this.age = age;
@@ -27,7 +49,7 @@ class Worker {
 /**
  * entry schema of worker model
  */
-const WorkerSchema = new EntitySchema({
+export const WorkerSchema = new EntitySchema<DataWorker>({
   name: 'Worker',
   target: Worker,
   tableName: 'workers',
@@ -56,8 +78,3 @@ const WorkerSchema = new EntitySchema({
     },
   },
 });
-
-module.exports = {
-  Worker,
-  WorkerSchema,
-};

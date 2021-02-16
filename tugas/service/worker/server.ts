@@ -1,18 +1,18 @@
-const { createServer } = require('http');
-const url = require('url');
-const { stdout } = require('process');
-const {
+import { createServer } from 'http';
+import * as url from 'url';
+import { stdout } from 'process';
+import {
   listSvc,
   registerSvc,
   removeSvc,
   infoSvc,
   getPhotoSvc,
-} = require('./worker.service');
-const { config } = require('../config');
+} from './worker.service';
+import { config } from '../config';
 
 let server;
 
-function run(callback) {
+export function run(callback) {
   server = createServer((req, res) => {
     // cors
     const aborted = cors(req, res);
@@ -20,7 +20,7 @@ function run(callback) {
       return;
     }
 
-    function respond(statusCode, message) {
+    function respond(statusCode?: number, message?: string) {
       res.statusCode = statusCode || 200;
       res.write(message || '');
       res.end();
@@ -28,30 +28,30 @@ function run(callback) {
 
     try {
       const uri = url.parse(req.url, true);
-      switch (uri.pathname) {
+      switch (uri?.pathname) {
         case '/register':
-          if (req.method === 'POST') {
+          if (req?.method === 'POST') {
             return registerSvc(req, res);
           } else {
             respond(404);
           }
           break;
         case '/list':
-          if (req.method === 'GET') {
+          if (req?.method === 'GET') {
             return listSvc(req, res);
           } else {
             respond(404);
           }
           break;
         case '/info':
-          if (req.method === 'GET') {
+          if (req?.method === 'GET') {
             return infoSvc(req, res);
           } else {
             respond(404);
           }
           break;
         case '/remove':
-          if (req.method === 'DELETE') {
+          if (req?.method === 'DELETE') {
             return removeSvc(req, res);
           } else {
             respond(404);
@@ -82,7 +82,7 @@ function run(callback) {
   });
 }
 
-function cors(req, res) {
+export function cors(req, res) {
   // handle preflight request
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Request-Method', '*');
@@ -92,21 +92,16 @@ function cors(req, res) {
   );
   res.setHeader('Access-Control-Allow-Headers', '*');
 
-  if (req.method === 'OPTIONS') {
+  if (req?.method === 'OPTIONS') {
     res.statusCode = 204;
     res.end();
     return true;
   }
 }
 
-function stop() {
+export function stop() {
   if (server) {
     server.close();
   }
 }
 
-module.exports = {
-  run,
-  stop,
-  cors,
-};

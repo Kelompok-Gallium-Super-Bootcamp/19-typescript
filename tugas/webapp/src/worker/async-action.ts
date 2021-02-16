@@ -1,20 +1,21 @@
 /**@module async-action-worker */
 
-const {
+import { DataWorker } from './reducer';
+import {
   loadingAction,
   errorAction,
   registeredAction,
   removedAction,
   workersLoadedAction,
-} = require('./store');
-const workerSvc = require('./worker.client');
+} from './store';
+import * as workerSvc from './worker.client';
 
 /**
  * memasukkan data pekerja
  * @function
  * @param {WorkerData} data 
  */
-exports.register = (data) => async (dispatch) => {
+export const register = (data: DataWorker) => async (dispatch: any) => {
   dispatch(loadingAction());
   try {
     const worker = await workerSvc.register(data);
@@ -29,7 +30,7 @@ exports.register = (data) => async (dispatch) => {
  * @function
  * @param {number} id
  */
-exports.remove = (id) => async (dispatch) => {
+export const remove = (id: number) => async (dispatch: any) => {
   dispatch(loadingAction());
   try {
     await workerSvc.remove(id);
@@ -43,7 +44,7 @@ exports.remove = (id) => async (dispatch) => {
  * memuat semua data pekerja
  * @function 
  */
-exports.getList = async (dispatch) => {
+export const getList = async (dispatch: any) => {
   dispatch(loadingAction());
   try {
     const workers = await workerSvc.list();

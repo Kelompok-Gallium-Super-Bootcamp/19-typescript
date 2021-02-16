@@ -1,11 +1,11 @@
-const rc = require('rc');
+import * as rc from 'rc';
 
 const defaultConfig = {
   database: {
-    type: 'postgres',
+    type: 'mysql',
     host: 'localhost',
-    port: 5432,
-    username: 'postgres',
+    port: 3306,
+    username: 'root',
     password: '',
     database: 'database',
   },
@@ -13,8 +13,8 @@ const defaultConfig = {
     endPoint: '127.0.0.1',
     port: 9000,
     useSSL: false,
-    accessKey: 'local-minio',
-    secretKey: 'local-test-secret',
+    accessKey: 'admin',
+    secretKey: 'password',
   },
   serverWorker: {
     port: 7001,
@@ -27,8 +27,4 @@ const defaultConfig = {
   },
 };
 
-const config = rc('tm', defaultConfig);
-
-module.exports = {
-  config,
-};
+export const config = rc('tm', defaultConfig);

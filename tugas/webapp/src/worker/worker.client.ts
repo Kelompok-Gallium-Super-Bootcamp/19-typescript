@@ -1,16 +1,17 @@
 /**
  * @module worker-client
  */
-const { client } = require('../lib/http-client');
+import { client } from '../lib/http-client';
 
-const { SERVICE_BASEURL } = require('./config');
+import { SERVICE_BASEURL } from './config';
+import { DataWorker } from './reducer';
 
 /**
  * fungsi register worker
  * @function
  * @param {WorkerData} data 
  */
-function register(data) {
+export function register(data: DataWorker) {
   return client.post(`${SERVICE_BASEURL}/register`, data);
 }
 
@@ -18,7 +19,7 @@ function register(data) {
  * fungsi list worker
  * @function 
  */
-function list() {
+export function list() {
   return client.get(`${SERVICE_BASEURL}/list`);
 }
 
@@ -27,7 +28,7 @@ function list() {
  * @function 
  * @param {number} id
  */
-function remove(id) {
+export function remove(id: number) {
   return client.del(`${SERVICE_BASEURL}/remove?id=${id}`);
 }
 
@@ -36,13 +37,7 @@ function remove(id) {
  * @function 
  * @param {number} id
  */
-function info(id) {
+export function info(id: number) {
   return client.get(`${SERVICE_BASEURL}/info?id=${id}`);
 }
 
-module.exports = {
-  register,
-  list,
-  remove,
-  info,
-};
