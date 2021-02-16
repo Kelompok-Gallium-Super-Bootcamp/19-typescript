@@ -1,22 +1,39 @@
 /** @module TaskModel */
 
-const { EntitySchema } = require('typeorm');
+import { EntitySchema } from 'typeorm';
+
+export interface Worker {
+  assigneed : number ;
+  name : string;
+  age : number;
+  bio : string;
+  address : string ;
+  photo : string;
+}
+
+export interface TaskItems {
+  id: number;
+  job: string;
+  assignee: Worker;
+  done: boolean;
+  cancelled: boolean;
+  attachment: string;
+  addedAt : string;
+}
 
 /**
  * Task Model
  */
-class Task {
-  /**
-   *
-   * @param {string} id
-   * @param {string} job
-   * @param {object} assignee
-   * @param {boolean} done
-   * @param {boolean} cancelled
-   * @param {string} attachment
-   * @param {date} addedAt
-   */
-  constructor(id, job, assignee, done, cancelled, attachment, addedAt) {
+export class Task {
+  constructor(
+    public id: number,
+    public job: string,
+    public assignee: object,
+    public done: boolean,
+    public cancelled: boolean,
+    public attachment: string,
+    private addedAt: string
+  ) {
     this.id = id;
     this.job = job;
     this.done = done;
@@ -30,7 +47,7 @@ class Task {
 /**
  * entry schema of Task model
  */
-const TaskSchema = new EntitySchema({
+export const TaskSchema = new EntitySchema <TaskItems> ({
   name: 'Task',
   tableName: 'tasks',
   target: Task,
@@ -72,7 +89,3 @@ const TaskSchema = new EntitySchema({
   },
 });
 
-module.exports = {
-  Task,
-  TaskSchema,
-};

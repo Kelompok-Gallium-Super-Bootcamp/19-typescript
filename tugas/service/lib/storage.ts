@@ -1,13 +1,20 @@
 /** @module LibraryStorage */
+import * as  mime from 'mime-types';
+import  { Client } from 'minio';
 
-import mime from 'mime-types';
-import { Client } from 'minio';
+export const ERROR_REQUIRE_OBJECT_NAME = 'error wajib memasukan nama objek';
+export const ERROR_FILE_NOT_FOUND = 'error file tidak ditemukan';
 
-const ERROR_REQUIRE_OBJECT_NAME = 'error wajib memasukan nama objek';
-const ERROR_FILE_NOT_FOUND = 'error file tidak ditemukan';
+export interface OptionStorage{
+    endPoint: string;
+    port: number;
+    useSSL: boolean;
+    accessKey: string;
+    secretKey: string;
+}
 
 let client;
-let bucketname;
+let bucketname : string;
 
 /**
  * function connect storage
@@ -16,7 +23,7 @@ let bucketname;
  * @returns close function
  * @throws {string} error if fail create new bucket name
  */
-export async function connect(_bucketname, options) {
+export async function connect(_bucketname : string, options : OptionStorage) {
   client = new Client({
     ...options,
     useSSL: false,
@@ -37,7 +44,7 @@ export async function connect(_bucketname, options) {
  * @param {function} mimetype function mimetype
  * @returns {string} file name random
  */
-export function randomFileName(mimetype) {
+function randomFileName(mimetype) {
   return (
     new Date().getTime() +
     '-' +
@@ -73,7 +80,7 @@ export function saveFile(file, mimetype) {
  * @throws {string} when objectName is null
  * @throws {string} when filename not found
  */
-export async function readFile(objectName) {
+export async function readFile(objectName : string) {
   if (!objectName) {
     throw ERROR_REQUIRE_OBJECT_NAME;
   }

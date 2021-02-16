@@ -8,7 +8,15 @@
  * @property {boolean} cancelled keterangan selesai/tidaknya pekerjaan
  */
 
-/**
+ export interface TaskData {
+     id : number ;
+     job: string;
+     assignee : string;
+     done: boolean;
+     canceled : Boolean;
+ }
+
+ /**
  * WorkerData type definition
  * @typedef {Object} WorkerData
  * @property {number} id id of a worker
@@ -18,3 +26,11 @@
  * @property {string} address alamat pekerja
  * @property {string} photo photo dari pekerja
  */
+ export interface WorkerData {
+    id : Number;
+    name : string;
+    age : Number;
+    bio : string
+    address : string ;
+    photo : string
+ }

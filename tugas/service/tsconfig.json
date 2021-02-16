@@ -1,10 +1,11 @@
 {
-  "compilerOptions": {
-    "outDir": "./dist",
-    "sourceMap": true,
-    "allowJs": true,
-    "target": "ES6",
-    "moduleResolution": "Node"
-  },
-  "include": ["./**/*"]
-}
+    "compilerOptions": {
+      "outDir": "./dist",
+      "sourceMap": true,
+      "allowJs": true,
+      "target": "ES6",   
+      "strictNullChecks": false,   
+      "moduleResolution": "Node"
+    },
+    "include": ["./tasks/**/*"]
+  }

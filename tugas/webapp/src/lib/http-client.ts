@@ -1,11 +1,10 @@
 /** @module http-client */
 
 export interface RequestOption {
-  method: 'GET' | 'POST' | 'PUT' | 'OPTION';
+  method: 'GET' | 'POST' | 'PUT' | 'OPTION' | 'DELETE';
   body?: any;
   customConf?: any;
 }
-
 /**
  * basic client untuk request ke server
  * @param {string} endpoint target / url endpoint
