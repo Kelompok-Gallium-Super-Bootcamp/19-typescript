@@ -1,13 +1,13 @@
-const {
+import  {
   done,
   cancel,
   getList,
   add,
   getWorkersList,
-} = require('./async-action');
-const { store$, errorAction, clearErrorAction } = require('./store');
+} from './async-action';
+import  { store$, errorAction, clearErrorAction } from './store';
 
-require('./main.css');
+import './main.css';
 
 const form = document.getElementById('form');
 const job = document.getElementById('job');
