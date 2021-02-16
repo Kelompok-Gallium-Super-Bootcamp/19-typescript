@@ -41,10 +41,10 @@ export async function connect(_bucketname : string, options : OptionStorage) {
 
 /**
  * function random file name
- * @param {function} mimetype function mimetype
+ * @param {string} mimetype function mimetype
  * @returns {string} file name random
  */
-function randomFileName(mimetype) {
+export function randomFileName(mimetype: string): string {
   return (
     new Date().getTime() +
     '-' +
@@ -80,7 +80,7 @@ export function saveFile(file, mimetype) {
  * @throws {string} when objectName is null
  * @throws {string} when filename not found
  */
-export async function readFile(objectName : string) {
+export async function readFile(objectName: string) {
   if (!objectName) {
     throw ERROR_REQUIRE_OBJECT_NAME;
   }

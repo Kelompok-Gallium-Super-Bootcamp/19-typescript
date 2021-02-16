@@ -1,11 +1,11 @@
-/** @module WorkerService */
+/** @module Worker */
 
-const { getConnection } = require('typeorm');
-const { Worker } = require('./worker.model');
-const bus = require('../lib/bus');
+import { getConnection } from 'typeorm';
+import { DataWorker, Worker } from './worker.model';
+import * as bus from '../lib/bus';
 
-const ERROR_REGISTER_DATA_INVALID = 'data registrasi pekerja tidak lengkap';
-const ERROR_WORKER_NOT_FOUND = 'pekerja tidak ditemukan';
+export const ERROR_REGISTER_DATA_INVALID = 'data registrasi pekerja tidak lengkap';
+export const ERROR_WORKER_NOT_FOUND = 'pekerja tidak ditemukan';
 
 /**
  * add new Worker
@@ -13,11 +13,11 @@ const ERROR_WORKER_NOT_FOUND = 'pekerja tidak ditemukan';
  * @returns {Promise<worker>} new worker detail with id
  * @throws {string} when data null
  */
-async function register(data) {
+export async function register(data: DataWorker): Promise<Worker> {
   if (!data.name || !data.age || !data.bio || !data.address || !data.photo) {
     throw ERROR_REGISTER_DATA_INVALID;
   }
-  const workerRepo = getConnection().getRepository('Worker');
+  const workerRepo = getConnection().getRepository<Worker>('Worker');
   const worker = new Worker(
     null,
     data.name,
@@ -35,8 +35,8 @@ async function register(data) {
  * get list of worker
  * @return {Promise<Worker[]>} list of worker
  */
-function list() {
-  const workerRepo = getConnection().getRepository('Worker');
+export function list(): Promise<Worker[]> {
+  const workerRepo = getConnection().getRepository<Worker>('Worker');
   return workerRepo.find();
 }
 
@@ -46,8 +46,8 @@ function list() {
  * @returns {Promise<Worker>} get info worker
  * @throws {string} when info worker not found in database
  */
-async function info(id) {
-  const workerRepo = getConnection().getRepository('Worker');
+export async function info(id: string): Promise<Worker> {
+  const workerRepo = getConnection().getRepository<Worker>('Worker');
   const worker = await workerRepo.findOne(id);
   if (!worker) {
     throw ERROR_WORKER_NOT_FOUND;
@@ -61,8 +61,8 @@ async function info(id) {
  * @returns {Promise<Worker>} remove Worker
  * @throws {string} when worker not found in database
  */
-async function remove(id) {
-  const workerRepo = getConnection().getRepository('Worker');
+export async function remove(id: string): Promise<Worker> {
+  const workerRepo = getConnection().getRepository<Worker>('Worker');
   const worker = await workerRepo.findOne(id);
   if (!worker) {
     throw ERROR_WORKER_NOT_FOUND;
@@ -76,11 +76,11 @@ async function remove(id) {
  * truncate database
  * @returns {Promise<boolean>} boolean
  */
-async function truncate() {
+export async function truncate(): Promise<boolean> {
   const entities = getConnection().entityMetadatas;
 
   for (const entity of entities) {
-    const repository = await getConnection().getRepository(entity.name); // Get repository
+    const repository = await getConnection().getRepository<Worker>(entity.name); // Get repository
     try {
       // change clear to delete for reference table issue
 
@@ -93,12 +93,3 @@ async function truncate() {
   return true;
 }
 
-module.exports = {
-  register,
-  list,
-  remove,
-  info,
-  truncate,
-  ERROR_REGISTER_DATA_INVALID,
-  ERROR_WORKER_NOT_FOUND,
-};

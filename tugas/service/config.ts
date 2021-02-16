@@ -28,4 +28,3 @@ const defaultConfig = {
 };
 
 export const config = rc('tm', defaultConfig);
-

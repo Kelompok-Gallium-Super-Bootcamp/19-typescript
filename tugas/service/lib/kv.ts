@@ -10,7 +10,6 @@ interface OptionsKv {
   database?: string;
 }
 
-
 /**
  * function connect
  * @param {Object} options config for connect kv
@@ -20,7 +19,7 @@ export function connect(options : OptionsKv) {
   return new Promise((resolve, reject) =>  {
     client = redis.createClient(options);
     client.on('connect', () => {
-      resolve('success')  ;
+      resolve('')  ;
     });
     client.on('error', (err) => {
       reject(err);
@@ -34,7 +33,7 @@ export function connect(options : OptionsKv) {
  * @param {object} data data object
  * @returns {Promise<Save>} save data to kv
  */
-export function save(db : string, data) {
+export function save(db : string, data: any) {
   const setAsync = promisify(client.set).bind(client);
   return setAsync(db, data);
 }

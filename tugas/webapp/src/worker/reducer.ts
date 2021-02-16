@@ -1,23 +1,58 @@
-const { SERVICE_BASEURL } = require('./config');
+import { SERVICE_BASEURL } from './config';
+
+export interface DataWorker{
+  id: number,
+  name: string,
+  age: string,
+  bio: string,
+  address: string,
+  photo: string
+}
+
+export interface State{
+  loading:boolean;
+  error:any;
+  workers:DataWorker[];
+}
+
+interface ActionObject {
+  type: string;
+}
+
+interface ActionObjectError extends ActionObject{
+  payload:any;
+}
+
+interface ActionObjectAdd extends ActionObject {
+  payload: DataWorker;
+}
+
+interface ActionObjectDel extends ActionObject {
+  payload: number;
+}
+
+interface ActionObjectList extends ActionObject {
+  payload: DataWorker[];
+}
 
 // setup state
-const initialState = {
+export const initialState = {
   loading: false,
   error: null,
   workers: [],
 };
 
-function loading(state) {
+export function loading(state: State) {
   state.loading = true;
   state.error = null;
 }
 
-function error(state, action) {
+export function error(state: State, action: ActionObjectError ) {
   state.loading = false;
   state.error = action.payload;
 }
 
-function clearError(state) {
+export function clearError(state: State) {
   state.error = null;
 }
 
@@ -26,12 +61,12 @@ function clearError(state) {
 /**
  * register worker
  * @function
- * @param {Object} state
+ * @param {Object} state 
  * @param {function} action
  * @return {Object} state
  */
-function registered(state, action) {
-  const worker = action.payload;
+export function registered(state:State, action:ActionObjectAdd): State {
+  const worker = action?.payload;
   state.workers.push({
     id: worker.id,
     name: worker.name,
@@ -46,12 +81,12 @@ function registered(state, action) {
 /**
  * remove worker
  * @function
- * @param {Object} state
+ * @param {Object} state 
  * @param {function} action
  * @return {Object} state
  */
-function removed(state, action) {
-  const idx = state.workers.findIndex((t) => t.id === action.payload);
+export function removed(state: State, action: ActionObjectDel): State {
+  const idx = state.workers.findIndex((t) => t.id === action?.payload);
   state.workers.splice(idx, 1);
   state.loading = false;
   state.error = null;
@@ -61,12 +96,12 @@ function removed(state, action) {
 /**
  * load all workers
  * @function
- * @param {Object} state
+ * @param {Object} state 
  * @param {function} action
  * @return {Object} state
  */
-function workersLoaded(state, action) {
-  state.workers = action.payload.map((worker) => ({
+export function workersLoaded(state: State, action: ActionObjectList): State {
+  state.workers = action?.payload.map((worker) => ({
     id: worker.id,
     name: worker.name,
     photo: `${SERVICE_BASEURL}/photo/${worker.photo}`,
@@ -76,13 +111,3 @@ function workersLoaded(state, action) {
   state.error = null;
   return state;
 }
-
-module.exports = {
-  initialState,
-  registered,
-  removed,
-  workersLoaded,
-  error,
-  loading,
-  clearError,
-};

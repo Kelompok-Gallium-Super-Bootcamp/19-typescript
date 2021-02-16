@@ -1,9 +1,9 @@
-const {
+import {
   createAction,
   createReducer,
   configureStore,
-} = require('@reduxjs/toolkit');
-const {
+} from '@reduxjs/toolkit';
+import {
   initialState,
   error,
   loading,
@@ -11,36 +11,36 @@ const {
   removed,
   workersLoaded,
   clearError,
-} = require('./reducer');
-const thunkMiddleware = require('redux-thunk');
+} from './reducer';
+import thunkMiddleware from 'redux-thunk';
+import {DataWorker} from './reducer'
 
-const errorAction = createAction('error');
-const loadingAction = createAction('loading');
-const registeredAction = createAction('registered');
-const removedAction = createAction('removed');
-const workersLoadedAction = createAction('workersLoaded');
-const clearErrorAction = createAction('clearError');
+enum ActionType {
+  ERROR = 'error',
+  LOADING = 'loading',
+  REGISTERED = 'registered',
+  REMOVED = 'removed',
+  WORKERS_LOADED = 'workersLoaded',
+  CLEAR_ERROR = 'clearError',
+}
+
+export const errorAction = createAction<string>(ActionType.ERROR);
+export const loadingAction = createAction(ActionType.LOADING);
+export const registeredAction = createAction<DataWorker>(ActionType.REGISTERED);
+export const removedAction = createAction<number>(ActionType.REMOVED);
+export const workersLoadedAction = createAction<DataWorker[]>(ActionType.WORKERS_LOADED);
+export const clearErrorAction = createAction(ActionType.CLEAR_ERROR);
 
 const reducer = createReducer(initialState, {
-  [errorAction]: error,
-  [clearErrorAction]: clearError,
-  [loadingAction]: loading,
-  [registeredAction]: registered,
-  [removedAction]: removed,
-  [workersLoadedAction]: workersLoaded,
+  [ActionType.ERROR]: error,
+  [ActionType.CLEAR_ERROR]: clearError,
+  [ActionType.LOADING]: loading,
+  [ActionType.REGISTERED]: registered,
+  [ActionType.REMOVED]: removed,
+  [ActionType.WORKERS_LOADED]: workersLoaded,
 });
 
-const store$ = configureStore({
+export const store$ = configureStore({
   reducer,
-  middleware: [thunkMiddleware.default],
+  middleware: [thunkMiddleware],
 });
-
-module.exports = {
-  store$,
-  errorAction,
-  loadingAction,
-  registeredAction,
-  removedAction,
-  workersLoadedAction,
-  clearErrorAction,
-};
