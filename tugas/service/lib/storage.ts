@@ -32,7 +32,7 @@ export async function connect(_bucketname : string, options : OptionStorage) {
   try {
     await client.makeBucket(bucketname);
   } catch (err) {
-    if (err && err.code === 'BucketAlreadyOwnedByYou') {
+    if (err?.code === 'BucketAlreadyOwnedByYou') {
       return;
     }
     throw err;
@@ -60,7 +60,7 @@ function randomFileName(mimetype) {
  * @param {function} mimetype function mimetype
  * @returns {Promise<File>} save file to storage bucket
  */
-export function saveFile(file : string , mimetype : string ) {
+export function saveFile(file, mimetype) {
   const objectName = randomFileName(mimetype);
   return new Promise((resolve, reject) => {
     client.putObject(bucketname, objectName, file, (err) => {
@@ -87,11 +87,10 @@ export async function readFile(objectName : string) {
   try {
     await client.statObject(bucketname, objectName);
   } catch (err) {
-    if (err && err.code === 'NotFound') {
+    if (err?.code === 'NotFound') {
       throw ERROR_FILE_NOT_FOUND;
     }
     throw err;
   }
   return client.getObject(bucketname, objectName);
 }
-

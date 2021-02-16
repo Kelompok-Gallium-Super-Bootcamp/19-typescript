@@ -26,7 +26,7 @@ function clearError(state) {
 /**
  * register worker
  * @function
- * @param {Object} state 
+ * @param {Object} state
  * @param {function} action
  * @return {Object} state
  */
@@ -46,7 +46,7 @@ function registered(state, action) {
 /**
  * remove worker
  * @function
- * @param {Object} state 
+ * @param {Object} state
  * @param {function} action
  * @return {Object} state
  */
@@ -61,7 +61,7 @@ function removed(state, action) {
 /**
  * load all workers
  * @function
- * @param {Object} state 
+ * @param {Object} state
  * @param {function} action
  * @return {Object} state
  */

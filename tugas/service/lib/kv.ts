@@ -6,8 +6,8 @@ import { promisify } from 'util';
 let client;
 
 interface OptionsKv {
-  port? : number;
-  database ?: string;
+  port?: number;
+  database?: string;
 }
 
 
@@ -71,4 +71,3 @@ export function close() {
     client.end(true);
   }
 }
-

@@ -1,5 +1,5 @@
 /** @module LibraryBus */
-const nats = require('nats');
+import * as nats from 'nats';
 
 let client;
 
@@ -9,11 +9,11 @@ let client;
  * @param {object} config config for message bus
  * @returns {Promise<Connect>} if resolve connect success
  */
-export function connect(url, config) {
+export function connect(url?: string, config?: any) {
   return new Promise((resolve, reject) => {
     client = nats.connect(url, config);
     client.on('connect', () => {
-      resolve('success');
+      resolve('');
     });
     client.on('error', (err) => {
       reject(err);
@@ -26,7 +26,7 @@ export function connect(url, config) {
  * @param {string} subject subject of message bus
  * @param {object} data data of message bus
  */
-export function publish(subject, data) {
+export function publish(subject: string, data: any) {
   client.publish(subject, JSON.stringify(data));
 }
 
@@ -36,7 +36,7 @@ export function publish(subject, data) {
  * @param {string} callback callback subscribe
  * @returns {ClientSubscribe} client success subscribe
  */
-export function subscribe(subject, callback) {
+export function subscribe(subject: string, callback) {
   return client.subscribe(subject, callback);
 }
 
@@ -45,7 +45,7 @@ export function subscribe(subject, callback) {
  * @param {string} sid subscribe id
  * @returns {ClientUnsubscribe} client success unsubscribe
  */
-export function unsubscribe(sid) {
+export function unsubscribe(sid: string) {
   return client.unsubscribe(sid);
 }
 
@@ -60,4 +60,3 @@ export function close() {
   }
   client.close();
 }
-

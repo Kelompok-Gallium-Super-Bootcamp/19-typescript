@@ -1,15 +1,10 @@
 /** @module http-client */
 
-import { WorkerData, TaskData} from '../../typing'
-
 export interface RequestOption {
   method: 'GET' | 'POST' | 'PUT' | 'OPTION' | 'DELETE';
   body?: any;
   customConf?: any;
-  json?: any;
 }
-
-
 /**
  * basic client untuk request ke server
  * @param {string} endpoint target / url endpoint
@@ -17,23 +12,23 @@ export interface RequestOption {
  * @param {RequestInit} options tambahan opsi request
  * @return {Promise<any>} hasil request
  */
-export async function client(endpoint : string, options : RequestOption) {
+export async function client(endpoint: string, json?: any, options?: RequestOption): Promise<any> {
   let headers;
-  if (options?.json) {
+  if (json) {
     headers = { 'Content-Type': 'application/json' };
   }
 
   const config = {
-    method : options?.method || 'GET',
+    method: options?.method ?? 'GET',
     ...options?.customConf,
     headers: {
       ...headers,
-      ...options.customConf?.headers,
+      ...options?.customConf?.headers,
     },
   };
 
   if (options?.body) {
-    if (options?.json) {
+    if (json) {
       config.body = JSON.stringify(options?.body);
     } else {
       const formData = new FormData();
@@ -49,12 +44,12 @@ export async function client(endpoint : string, options : RequestOption) {
     const response = await window.fetch(endpoint, config);
     data = await response.json();
     if (!response.ok) {
-      throw new Error(data.statusText);
+      throw new Error(data?.statusText ?? 'Gagal request ke api');
     }
 
     return data;
   } catch (err) {
-    return Promise.reject(err.message || data);
+    return Promise.reject(err?.message || data);
   }
 }
 
@@ -63,12 +58,8 @@ export async function client(endpoint : string, options : RequestOption) {
  * @param {string} endpoint target / url endpoint
  * @param {RequestInit} option tambahan opsi request
  */
-client.get = (endpoint:string, customConf : any= {}) => {
-  const config: RequestOption = {
-    method: 'GET',
-    ...customConf
-  };
-  return client(endpoint, config);
+client.get = (endpoint:string, customConf:any = {}): Promise<any> => {
+  return client(endpoint, true, { method: 'GET', ...customConf });
 };
 
 /**
@@ -78,13 +69,8 @@ client.get = (endpoint:string, customConf : any= {}) => {
  * @param {Object} json isi request
  * @param {RequestInit} option tambahan opsi request
  */
-client.post = (endpoint : string, body : TaskData, customConf: any= {}) => {
-  const config :RequestOption = {
-    method: 'POST',
-    body : body, 
-    ...customConf 
-  }
-  return client(endpoint, config );
+client.post = (endpoint: string, body: any, json: any, customConf: any = {}): Promise<any> => {
+  return client(endpoint, json, { method: 'POST', body, ...customConf });
 };
 
 /**
@@ -94,12 +80,8 @@ client.post = (endpoint : string, body : TaskData, customConf: any= {}) => {
  * @param {Object} json isi request
  * @param {RequestInit} option tambahan opsi request
  */
-client.put = (endpoint :string , body? : TaskData, json? :JSON, customConf = {}) => {
-  const config : RequestOption = {
-    method: 'PUT',    
-    ...customConf 
-  }
-  return client(endpoint, config);
+client.put = (endpoint: string, body: any, json: any, customConf: any = {}): Promise<any> => {
+  return client(endpoint, json, { method: 'PUT', body, ...customConf });
 };
 
 /**
@@ -109,13 +91,6 @@ client.put = (endpoint :string , body? : TaskData, json? :JSON, customConf = {})
  * @param {Object} json isi request
  * @param {RequestInit} option tambahan opsi request
  */
-client.del = (endpoint: string, body? : TaskData, json? :JSON , customConf = {}) => {
-  const config :RequestOption = {
-    json, 
-    method: 'DELETE',
-    body : body,
-    ...customConf 
-  }
-  return client(endpoint, config);
+client.del = (endpoint: string, body: any, json: any, customConf: any = {}): Promise<any> => {
+  return client(endpoint, json, { method: 'DELETE', body, ...customConf });
 };
-

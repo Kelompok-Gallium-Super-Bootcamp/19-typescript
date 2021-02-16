@@ -8,7 +8,7 @@ const { SERVICE_BASEURL } = require('./config');
 /**
  * fungsi register worker
  * @function
- * @param {WorkerData} data 
+ * @param {WorkerData} data
  */
 function register(data) {
   return client.post(`${SERVICE_BASEURL}/register`, data);
@@ -16,7 +16,7 @@ function register(data) {
 
 /**
  * fungsi list worker
- * @function 
+ * @function
  */
 function list() {
   return client.get(`${SERVICE_BASEURL}/list`);
@@ -24,7 +24,7 @@ function list() {
 
 /**
  * fungsi remove worker
- * @function 
+ * @function
  * @param {number} id
  */
 function remove(id) {
@@ -32,8 +32,8 @@ function remove(id) {
 }
 
 /**
- * fungsi untuk melihat informasi worker 
- * @function 
+ * fungsi untuk melihat informasi worker
+ * @function
  * @param {number} id
  */
 function info(id) {

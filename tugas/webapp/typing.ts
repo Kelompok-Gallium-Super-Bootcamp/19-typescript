@@ -26,8 +26,6 @@
  * @property {string} address alamat pekerja
  * @property {string} photo photo dari pekerja
  */
-
-
  export interface WorkerData {
     id : Number;
     name : string;
