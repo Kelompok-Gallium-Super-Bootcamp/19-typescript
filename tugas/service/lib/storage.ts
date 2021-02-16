@@ -1,13 +1,20 @@
 /** @module LibraryStorage */
-
-import mime from 'mime-types';
-import { Client } from 'minio';
+import * as  mime from 'mime-types';
+import  { Client } from 'minio';
 
 export const ERROR_REQUIRE_OBJECT_NAME = 'error wajib memasukan nama objek';
 export const ERROR_FILE_NOT_FOUND = 'error file tidak ditemukan';
 
+export interface OptionStorage{
+    endPoint: string;
+    port: number;
+    useSSL: boolean;
+    accessKey: string;
+    secretKey: string;
+}
+
 let client;
-let bucketname;
+let bucketname : string;
 
 /**
  * function connect storage
@@ -16,7 +23,7 @@ let bucketname;
  * @returns close function
  * @throws {string} error if fail create new bucket name
  */
-export async function connect(_bucketname: string, options: object): Promise<void> {
+export async function connect(_bucketname : string, options : OptionStorage) {
   client = new Client({
     ...options,
     useSSL: false,
@@ -25,7 +32,7 @@ export async function connect(_bucketname: string, options: object): Promise<voi
   try {
     await client.makeBucket(bucketname);
   } catch (err) {
-    if (err && err.code === 'BucketAlreadyOwnedByYou') {
+    if (err?.code === 'BucketAlreadyOwnedByYou') {
       return;
     }
     throw err;
@@ -49,11 +56,11 @@ export function randomFileName(mimetype: string): string {
 
 /**
  * function save file
- * @param {string} file data file
- * @param {string} mimetype function mimetype
- * @returns {Promise} save file to storage bucket
+ * @param {file} file data file
+ * @param {function} mimetype function mimetype
+ * @returns {Promise<File>} save file to storage bucket
  */
-export function saveFile(file: string, mimetype: string): Promise<any> {
+export function saveFile(file, mimetype) {
   const objectName = randomFileName(mimetype);
   return new Promise((resolve, reject) => {
     client.putObject(bucketname, objectName, file, (err) => {
@@ -80,7 +87,7 @@ export async function readFile(objectName: string) {
   try {
     await client.statObject(bucketname, objectName);
   } catch (err) {
-    if (err && err.code === 'NotFound') {
+    if (err?.code === 'NotFound') {
       throw ERROR_FILE_NOT_FOUND;
     }
     throw err;

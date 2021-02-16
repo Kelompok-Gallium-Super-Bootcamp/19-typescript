@@ -9,7 +9,7 @@ let client;
  * @param {object} config config for message bus
  * @returns {Promise<Connect>} if resolve connect success
  */
-export function connect(url: string, config: object) {
+export function connect(url?: string, config?: any) {
   return new Promise((resolve, reject) => {
     client = nats.connect(url, config);
     client.on('connect', () => {
@@ -26,7 +26,7 @@ export function connect(url: string, config: object) {
  * @param {string} subject subject of message bus
  * @param {object} data data of message bus
  */
-export function publish(subject: string, data: object) {
+export function publish(subject: string, data: any) {
   client.publish(subject, JSON.stringify(data));
 }
 
@@ -36,7 +36,7 @@ export function publish(subject: string, data: object) {
  * @param {string} callback callback subscribe
  * @returns {ClientSubscribe} client success subscribe
  */
-export function subscribe(subject: string, callback): string {
+export function subscribe(subject: string, callback) {
   return client.subscribe(subject, callback);
 }
 
@@ -45,7 +45,7 @@ export function subscribe(subject: string, callback): string {
  * @param {string} sid subscribe id
  * @returns {ClientUnsubscribe} client success unsubscribe
  */
-export  function unsubscribe(sid: string) {
+export function unsubscribe(sid: string) {
   return client.unsubscribe(sid);
 }
 
@@ -60,4 +60,3 @@ export function close() {
   }
   client.close();
 }
-

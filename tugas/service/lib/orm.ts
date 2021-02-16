@@ -1,17 +1,20 @@
-import  { ConnectionOptions, createConnection, EntitySchema } from 'typeorm';
+import { createConnection } from 'typeorm';
 
-/**
- * connect to database
- * @deprecated
- * @param {EntitySchema[]} entities model entitites schemas
- * @param {*} config additional [`typeorm`](https://typeorm.io) connection config
- * 
- */
+export interface Config {
+    type: string;
+    host: string;
+    port: number;
+    username: string;
+    password: string;
+    database: string;
+}
 
-export function connect(entities: EntitySchema[], config: ConnectionOptions) {
+
+export function connect(entities : Object, config : Config) {
   return createConnection({
     ...config,
     synchronize: true,
+    timezone: 'Asia/Jakarta',
     entities,
   });
 }

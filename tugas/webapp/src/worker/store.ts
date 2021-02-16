@@ -12,7 +12,7 @@ import {
   workersLoaded,
   clearError,
 } from './reducer';
-import * as thunkMiddleware from 'redux-thunk';
+import thunkMiddleware from 'redux-thunk';
 import {DataWorker} from './reducer'
 
 enum ActionType {
@@ -42,5 +42,5 @@ const reducer = createReducer(initialState, {
 
 export const store$ = configureStore({
   reducer,
-  middleware: [thunkMiddleware.default],
+  middleware: [thunkMiddleware],
 });

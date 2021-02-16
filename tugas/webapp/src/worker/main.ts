@@ -60,9 +60,9 @@ function render(state) {
     errorTxt.textContent = '';
   }
   if (state.loading) {
-    loadingTxt.style = '';
+    loadingTxt.style.display = '';
   } else {
-    loadingTxt.style = 'display:none;';
+    loadingTxt.style.display = 'none';
   }
 
   // render list of worker

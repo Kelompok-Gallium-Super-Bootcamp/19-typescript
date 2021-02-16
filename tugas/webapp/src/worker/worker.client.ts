@@ -40,4 +40,3 @@ export function remove(id: number) {
 export function info(id: number) {
   return client.get(`${SERVICE_BASEURL}/info?id=${id}`);
 }
-

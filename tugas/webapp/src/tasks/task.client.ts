@@ -1,23 +1,26 @@
 /**
  * @module task-client
  */
-const { client } = require('../lib/http-client');
+import{ client } from '../lib/http-client';
+import { SERVICE_BASEURL } from './config';
+import {TaskData} from '../../typing'
 
-const { SERVICE_BASEURL } = require('./config');
+
 /**
  * add task
  * @function
  * @param {TaskData} data 
  */
-function add(data) {
-  return client.post(`${SERVICE_BASEURL}/add`, data);
+export function add(data : TaskData)   {
+  return client.post
+  (`${SERVICE_BASEURL}/add`, data);
 }
 
 /**
  * list all tasks
  * @function 
  */
-function list() {
+export function list() {
   return client.get(`${SERVICE_BASEURL}/list`);
 }
 
@@ -26,7 +29,7 @@ function list() {
  * @function
  * @param {number} id 
  */
-function cancel(id) {
+export function cancel(id:number) {
   return client.put(`${SERVICE_BASEURL}/cancel?id=${id}`);
 }
 
@@ -35,13 +38,6 @@ function cancel(id) {
  * @function
  * @param {number} id 
  */
-function done(id) {
+export function done(id:number) {
   return client.put(`${SERVICE_BASEURL}/done?id=${id}`);
 }
-
-module.exports = {
-  add,
-  list,
-  cancel,
-  done,
-};

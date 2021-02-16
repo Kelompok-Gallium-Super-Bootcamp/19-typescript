@@ -1,6 +1,6 @@
 /**@module async-action-tasks */
 
-const {
+import {
   loadingAction,
   errorAction,
   doneAction,
@@ -8,16 +8,18 @@ const {
   tasksLoadedAction,
   workersLoadedAction,
   addedAction,
-} = require('./store');
-const workerSvc = require('./worker.client');
-const taskSvc = require('./task.client');
-
+} from './store';
+import * as workerSvc from './worker.client';
+import * as taskSvc from './task.client';
+import {TaskData} from '../../typing'
 /**
  * add new task
  * @function
  * @param {TaskData} data item yang akan ditambahkan pada task
  */
-exports.add = (data) => async (dispatch) => {
+
+
+export const add = (data : TaskData) => async (dispatch) => {
   dispatch(loadingAction());
   try {
     const task = await taskSvc.add(data);
@@ -32,7 +34,7 @@ exports.add = (data) => async (dispatch) => {
  * @function
  * @param {number} id merubah status task menjadi done malalui id
  */
-exports.done = (id) => async (dispatch) => {
+export const  done = (id:number) => async (dispatch) => {
   dispatch(loadingAction());
   try {
     await taskSvc.done(id);
@@ -47,7 +49,7 @@ exports.done = (id) => async (dispatch) => {
  * @function
  * @param {number} id merubah status task menjadi cancelled malalui id
  */
-exports.cancel = (id) => async (dispatch) => {
+export const  cancel = (id:number) => async (dispatch) => {
   dispatch(loadingAction());
   try {
     await taskSvc.cancel(id);
@@ -61,7 +63,7 @@ exports.cancel = (id) => async (dispatch) => {
  * get all item in task
  * @function
  */
-exports.getList = async (dispatch) => {
+export const  getList = async (dispatch) => {
   dispatch(loadingAction());
   try {
     const tasks = await taskSvc.list();
@@ -75,7 +77,7 @@ exports.getList = async (dispatch) => {
  * get all worker in task
  * @function
  */
-exports.getWorkersList = async (dispatch) => {
+export const  getWorkersList = async (dispatch) => {
   dispatch(loadingAction());
   try {
     const workers = await workerSvc.list();

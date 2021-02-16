@@ -1,9 +1,9 @@
-const http = require('http');
+import * as http from 'http';
+export const WORKER_HOST = 'http://localhost:7001';
+export const ERROR_WORKER_NOT_FOUND = 'pekerja tidak ditemukan';
 
-const WORKER_HOST = 'http://localhost:7001';
-const ERROR_WORKER_NOT_FOUND = 'pekerja tidak ditemukan';
 
-function info(id) {
+export function info (id : number){
   return new Promise((resolve, reject) => {
     const req = http.request(`${WORKER_HOST}/info?id=${id}`, (res) => {
       let data = '';
@@ -14,7 +14,7 @@ function info(id) {
         data += chunk.toString();
       });
       res.on('end', () => {
-        const worker = JSON.stringify(data);
+        const worker = JSON.stringify (data);
         resolve(worker);
       });
       res.on('error', (err) => {
@@ -25,6 +25,3 @@ function info(id) {
   });
 }
 
-module.exports = {
-  info,
-};

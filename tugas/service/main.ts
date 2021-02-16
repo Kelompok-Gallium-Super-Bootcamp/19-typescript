@@ -1,13 +1,13 @@
-const orm = require('./lib/orm');
-const storage = require('./lib/storage');
-const kv = require('./lib/kv');
-const bus = require('./lib/bus');
-const { TaskSchema } = require('./tasks/task.model');
-const { WorkerSchema } = require('./worker/worker.model');
-const workerServer = require('./worker/server');
-const tasksServer = require('./tasks/server');
-const performanceServer = require('./performance/server');
-const { config } = require('./config');
+import * as orm from './lib/orm';
+import * as storage from './lib/storage';
+import * as kv from'./lib/kv';
+import * as bus from './lib/bus';
+import { TaskSchema } from './tasks/task.model';
+import { WorkerSchema } from './worker/worker.model';
+import * as workerServer from './worker/server';
+import * as tasksServer from './tasks/server';
+import * as performanceServer from './performance/server';
+import { config } from './config';
 
 async function init() {
   try {
